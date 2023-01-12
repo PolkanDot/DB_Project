@@ -54,8 +54,8 @@ namespace DBProjectAPI.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
+                        .HasMaxLength(70)
+                        .HasColumnType("character varying(70)")
                         .HasColumnName("password");
 
                     b.HasKey("IdAccount")
