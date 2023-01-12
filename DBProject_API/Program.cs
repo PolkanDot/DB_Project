@@ -1,4 +1,5 @@
 using API.Models;
+using WorkFunctions;
 using Microsoft.EntityFrameworkCore;
 //using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
@@ -44,7 +45,7 @@ namespace API
                 Account newAcc = new();
                 newAcc.Name = inputAccount.Name;
                 newAcc.Email = inputAccount.Email;
-                newAcc.Password = inputAccount.Password;
+                newAcc.Password = WorkFunctionsClass.Hashing(inputAccount.Password);
                 newAcc.DateOfBirthday = inputAccount.DateOfBirthday;
                 newAcc.IdImage = inputAccount.IdImage;
                 db.Accounts.Add(newAcc);
