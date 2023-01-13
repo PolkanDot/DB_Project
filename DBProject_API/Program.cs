@@ -37,8 +37,8 @@ namespace API
                     is Account account ? Results.Ok(account) : Results.NotFound());
 
             app.MapGet("/account/{Email}/{Password}", async (string Email, string Password, PlaceBookingContext db) =>
-                await db.Accounts.FirstOrDefaultAsync(acc => acc.Email == Email && acc.Password == Password)
-                    is Account account ? Results.Ok(account) : Results.NotFound());           
+                await db.Accounts.FirstOrDefaultAsync(acc => acc.Email == Email && acc.Password == WorkFunctionsClass.Hashing(Password))
+                    is Account account ? Results.Ok(account) : Results.NotFound()) ;           
 
             app.MapPost("/account", async (Account inputAccount, PlaceBookingContext db) =>
             {
