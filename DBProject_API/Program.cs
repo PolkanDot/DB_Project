@@ -91,6 +91,20 @@ namespace API
                 return Results.Ok(inputImage);
             });
 
+            app.MapPost("/cinema", async (Cinema inputCinema, PlaceBookingContext db) =>
+            {
+                Cinema newCinema = new();
+                newCinema.Name = inputCinema.Name;
+                newCinema.Address = inputCinema.Address;
+                newCinema.CityName = inputCinema.CityName;
+
+                db.Cinemas.Add(newCinema);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newCinema);
+            }
+);
+
             app.Run();
         }
     }
