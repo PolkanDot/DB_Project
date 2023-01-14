@@ -54,13 +54,13 @@ class _SelectCityState extends State<SelectCity> {
                 Form(
                   key: formKey,
                   child: DropDownTextField(
-                    // initialValue: "name4",
-                    readOnly: false,
+                    //initialValue: "name4",
                     controller: _cnt,
                     clearOption: true,
-                    keyboardType: TextInputType.number,
-                    autovalidateMode: AutovalidateMode.always,
+                    keyboardType: TextInputType.text,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     clearIconProperty: IconProperty(color: Colors.green),
+                    enableSearch: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required field";
@@ -79,7 +79,13 @@ class _SelectCityState extends State<SelectCity> {
                       DropDownValueModel(name: 'name7', value: "value7"),
                       DropDownValueModel(name: 'name8', value: "value8"),
                     ],
-                    onChanged: (val) => {if (val != "") {print(val.name)}},
+                    onChanged: (val) => {
+                      if (val != ""){
+                        print(val.name)}
+                      else {
+                        print("haha")
+                      }
+                      },
                   ),
                 ),
               ],
