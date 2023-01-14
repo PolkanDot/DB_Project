@@ -13,7 +13,7 @@ public partial class Account
 
     public string Password { get; set; } = null!;
 
-    public string DateOfBirthday { get; set; }
+    public string DateOfBirthday { get; set; } = null!;
 
     public int? IdImage { get; set; }
 
