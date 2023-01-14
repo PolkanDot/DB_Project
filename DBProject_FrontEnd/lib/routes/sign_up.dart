@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/callApi/createAccount.dart';
 import '../callApi/checkRegisteredEmail.dart';
-import 'log_in.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -64,7 +63,7 @@ class SignUp extends StatelessWidget {
                             if (await createAccount(
                                 _name, _email, _dateOfBirthday, _pw) !=
                                 null) {
-                              Navigator.pushNamed(context, "/");
+                              Navigator.pushNamed(context, "/cities");
                             }
                             else {
                               showDialog(
