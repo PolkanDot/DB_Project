@@ -61,6 +61,7 @@ public partial class PlaceBookingContext : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(70)
                 .HasColumnName("password");
+            entity.Property(e => e.Role).HasColumnName("role");
 
             entity.HasOne(d => d.IdImageNavigation).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.IdImage)
