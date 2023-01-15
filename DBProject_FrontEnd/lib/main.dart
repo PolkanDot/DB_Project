@@ -27,10 +27,9 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const Welcome(),
-        '/sign_in': (context) => Authorization(),
+        '/log_in': (context) => Authorization(),
         '/register': (context) => SignUp(),
-        '/cities': (context) => SelectCity(),
-        '/cinemas': (context) => CinemaList(cityName: 'Yoshkar-Ola',),
+        '/cities': (context) => SelectCity()
       },
     ),
   );

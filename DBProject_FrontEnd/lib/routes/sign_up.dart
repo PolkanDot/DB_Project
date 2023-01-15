@@ -32,7 +32,7 @@ class SignUp extends StatelessWidget {
                 ),
                 TextField(
                   decoration:
-                      const InputDecoration(labelText: "Date of birthday(YYYY-MM-DD)"),
+                  const InputDecoration(labelText: "Date of birthday(YYYY-MM-DD)"),
                   onChanged: (String value) => {_dateOfBirthday = value},
                 ),
                 TextField(
@@ -43,16 +43,16 @@ class SignUp extends StatelessWidget {
                 TextField(
                   obscureText: true,
                   decoration:
-                      const InputDecoration(labelText: "Repeat Password"),
+                  const InputDecoration(labelText: "Repeat Password"),
                   onChanged: (String value) =>
-                      {(value == _pw ? duplicate = true : duplicate = false)},
+                  {(value == _pw ? duplicate = true : duplicate = false)},
                 ),
                 OverflowBar(
                   alignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/');
+                          Navigator.pushNamed(context, '/log_in');
                         },
                         child: const Text("CANCEL")),
                     ElevatedButton(
@@ -63,7 +63,7 @@ class SignUp extends StatelessWidget {
                             if (await createAccount(
                                 _name, _email, _dateOfBirthday, _pw) !=
                                 null) {
-                              Navigator.pushNamed(context, "/cities");
+                              Navigator.pushNamed(context, "/");
                             }
                             else {
                               showDialog(

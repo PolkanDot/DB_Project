@@ -25,13 +25,15 @@ namespace API
 
             var app = builder.Build();
 
+            ////////////// Account functions
+
             app.MapGet("/accounts", async (PlaceBookingContext db) =>
             await db.Accounts.ToListAsync());
-            /*
-            app.MapGet("/account/{IdAccount}", async (int idAccount, PlaceBookingContext db) =>
-                await db.Accounts.FindAsync(idAccount)
-                    is Account account ? Results.Ok(account) : Results.NotFound());
-            */
+            
+            /*app.MapGet("/account/{IdAccount}", async (int idAccount, PlaceBookingContext db) =>
+                await db.Accounts.FirstOrDefaultAsync(acc => acc.IdAccount == idAccount)
+                    is Account account ? Results.Ok(account) : Results.NotFound());*/
+
             app.MapGet("/account/{Email}", async (string Email, PlaceBookingContext db) =>
                 await db.Accounts.FirstOrDefaultAsync(acc => acc.Email == Email)
                     is Account account ? Results.Ok(account) : Results.NotFound());
@@ -79,6 +81,8 @@ namespace API
                 return Results.NotFound();
             });
 
+            ////////////// Image functions
+
             app.MapGet("/image/{IdImage}", async (int IdImage, PlaceBookingContext db) =>
             await db.Images.FindAsync(IdImage)
                     is Image image ? Results.Ok(image) : Results.NotFound());
@@ -91,6 +95,25 @@ namespace API
                 return Results.Ok(inputImage);
             });
 
+            ////////////// Cinema functions
+            
+            app.MapGet("/cinemas", async (PlaceBookingContext db) =>
+            await db.Cinemas.ToListAsync());
+
+            app.MapGet("/cinema/{IdCinema}", async (int IdCinema, PlaceBookingContext db) =>
+                await db.Cinemas.FirstOrDefaultAsync(cin => cin.IdCinema == IdCinema)
+                    is Cinema cinema ? Results.Ok(cinema) : Results.NotFound());
+
+            app.MapGet("/cinema/{cityName}", async (string cityName, PlaceBookingContext db) =>
+            {
+                return await db.Cinemas.Where(cinema => cinema.CityName == cityName).ToListAsync();
+            });
+
+
+            app.MapGet("/cinema/{Name}/{CityName}", async (string Name, string CityName, PlaceBookingContext db) =>
+                await db.Cinemas.FirstOrDefaultAsync(cin => cin.Name == Name && cin.CityName == CityName)
+                    is Cinema cinema ? Results.Ok(cinema) : Results.NotFound());
+
             app.MapPost("/cinema", async (Cinema inputCinema, PlaceBookingContext db) =>
             {
                 Cinema newCinema = new();
@@ -102,8 +125,13 @@ namespace API
                 await db.SaveChangesAsync();
 
                 return Results.Ok(newCinema);
-            }
-);
+            });
+
+            ////////////// Cities functions
+
+            app.MapGet("/cities", async (PlaceBookingContext db) =>
+             await db.Cinemas.Select(cinema => cinema.CityName).Distinct().ToListAsync()
+            );
 
             app.Run();
         }
