@@ -45,7 +45,7 @@ class Authorization extends StatelessWidget {
                   child: const Text("LOG IN"),
                   onPressed: () async {
                     if (await checkingExistenceOfAccount(_email, _pw) != null) {
-                      Navigator.pushNamed(context, "/cities");
+                      Navigator.pushNamed(context, "/cities", /*Пока заглушка, но нужно нередавать номер роли*/arguments: 0);
                     }
                     //if (await checkRegisterOfEmail(_email, _pw) != null) {
                     else {

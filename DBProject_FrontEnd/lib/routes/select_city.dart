@@ -43,6 +43,8 @@ class _SelectCityState extends State<SelectCity> {
 
   @override
   Widget build(BuildContext context) {
+    final role = ModalRoute.of(context)?.settings.arguments as int;
+
     return Scaffold(
       appBar: AppBar(title: const Text("-Step 1-"),centerTitle: true,),
       body: SingleChildScrollView(
@@ -102,7 +104,7 @@ class _SelectCityState extends State<SelectCity> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CinemaList(cityName: _selectedCity)));
+                    builder: (context) => CinemaList(cityName: _selectedCity, accountRole: role)));
           }
           formKey.currentState!.validate();
         },
