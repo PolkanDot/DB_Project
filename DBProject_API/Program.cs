@@ -49,6 +49,7 @@ namespace API
                 newAcc.Email = inputAccount.Email;
                 newAcc.Password = WorkFunctionsClass.Hashing(inputAccount.Password);
                 newAcc.DateOfBirthday = inputAccount.DateOfBirthday;
+                newAcc.Role = inputAccount.Role;
                 newAcc.IdImage = inputAccount.IdImage;
                 db.Accounts.Add(newAcc);
                 await db.SaveChangesAsync();
@@ -100,9 +101,9 @@ namespace API
             app.MapGet("/cinemas", async (PlaceBookingContext db) =>
             await db.Cinemas.ToListAsync());
 
-            app.MapGet("/cinema/{IdCinema}", async (int IdCinema, PlaceBookingContext db) =>
+            /*app.MapGet("/cinema/{IdCinema}", async (int IdCinema, PlaceBookingContext db) =>
                 await db.Cinemas.FirstOrDefaultAsync(cin => cin.IdCinema == IdCinema)
-                    is Cinema cinema ? Results.Ok(cinema) : Results.NotFound());
+                    is Cinema cinema ? Results.Ok(cinema) : Results.NotFound());*/
 
             app.MapGet("/cinema/{cityName}", async (string cityName, PlaceBookingContext db) =>
             {
