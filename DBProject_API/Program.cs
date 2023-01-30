@@ -8,15 +8,6 @@ namespace API
 {
     class Program
     {
-        static public Account Clone(Account inputAccount, Account editAccount)
-        {
-            editAccount.Name = inputAccount.Name;
-            editAccount.Email = inputAccount.Email;
-            editAccount.Password = inputAccount.Password;
-            editAccount.DateOfBirthday = inputAccount.DateOfBirthday;
-            editAccount.IdImage = inputAccount.IdImage;
-            return editAccount;
-        }
         static public void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -59,16 +50,20 @@ namespace API
 
             app.MapPut("/account/{idAccount}", async (int idAccount, Account inputAccount, PlaceBookingContext db) =>
             {
-                var account = await db.Accounts.FindAsync(idAccount);
-                if (account is null)
+                var editAccount = await db.Accounts.FindAsync(idAccount);
+                if (editAccount is null)
                 {
                     return Results.NotFound();
                 }
 
-                account = Clone(inputAccount, account);
+                editAccount.Name = inputAccount.Name;
+                editAccount.Email = inputAccount.Email;
+                editAccount.Password = inputAccount.Password;
+                editAccount.DateOfBirthday = inputAccount.DateOfBirthday;
+                editAccount.IdImage = inputAccount.IdImage;
 
                 await db.SaveChangesAsync();
-                return Results.Ok(account);
+                return Results.Ok(editAccount);
             });
 
             app.MapDelete("/account/{IdAccount}", async (int idAccount, PlaceBookingContext db) =>
@@ -126,6 +121,32 @@ namespace API
                 await db.SaveChangesAsync();
 
                 return Results.Ok(newCinema);
+            });
+
+            app.MapPut("/editCinema", async (Cinema inputCinema, PlaceBookingContext db) =>
+            {
+                var editCinema = await db.Cinemas.FindAsync(inputCinema.IdCinema);
+                if (editCinema is null)
+                {
+                    return Results.NotFound();
+                }
+                editCinema.Name = inputCinema.Name;
+                editCinema.CityName = inputCinema.CityName;
+                editCinema.Address = inputCinema.Address;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editCinema);
+            });
+
+            app.MapDelete("/cinema/{idCinema}", async (int idCinema, PlaceBookingContext db) =>
+            {
+                if (await db.Cinemas.FindAsync(idCinema) is Cinema cinema)
+                {
+                    db.Cinemas.Remove(cinema);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(cinema);
+                }
+                return Results.NotFound();
             });
 
             ////////////// Cities functions
