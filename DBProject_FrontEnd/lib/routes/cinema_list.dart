@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/callApi/get_cinemas_of_city.dart';
-
 import '../models/cinema.dart';
 
+class CinemaCard extends StatelessWidget {
+  const CinemaCard({required this.cinema, Key? key}) : super(key: key);
+
+  final Cinema cinema;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () =>
+          Navigator.pushNamed(context, "/cinema_actions", arguments: cinema),
+      title: Text(cinema.name,
+          style: const TextStyle(fontSize: 22, color: Colors.black)),
+      subtitle: Text("Address: ${cinema.address}",
+          style: const TextStyle(fontSize: 16, color: Colors.orange)),
+    );
+  }
+}
+
 class CinemaList extends StatefulWidget {
-  CinemaList({required this.cityName, required this.accountRole,Key? key}) : super(key: key);
+  CinemaList({required this.cityName, required this.accountRole, Key? key})
+      : super(key: key);
 
   final String cityName;
   final int accountRole;
@@ -35,64 +53,61 @@ class _CinemaListState extends State<CinemaList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("-Step 2-"),
+        title: const Text("-Admin page-"),
         centerTitle: true,
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            color: Colors.black,
+            height: 10,
+            thickness: 2,
+          ),
           itemCount: _cinemas.length,
+          padding: const EdgeInsets.all(20),
           itemBuilder: (BuildContext context, int index) {
-            return Column(children: [
-              OutlinedButton(
-                onPressed: () {},
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_cinemas[index].name,
-                        style:
-                        const TextStyle(fontSize: 22, color: Colors.black)),
-                    Text("Address: ${_cinemas[index].address}",
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.orange)),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-            ]);
+            return CinemaCard(cinema: _cinemas[index]);
           }),
+      floatingActionButton: OutlinedButton(
+        onPressed: () => Navigator.pushNamed(context, "/cinema_actions", arguments: Cinema(idCinema: 0, name: "",cityName: "", address: "", halls: [],)),
+        child: const Icon(
+          Icons.add,
+          size: Checkbox.width * 3,
+          color: Colors.green,
+        ),
+      ),
     );
-    // else
-    // {
-    //   return Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text("-Admin page-"),
-    //       centerTitle: true,
-    //     ),
-    //     body: ListView.builder(
-    //         itemCount: _cinemas.length,
-    //         itemBuilder: (BuildContext context, int index) {
-    //           return Column(children: [
-    //             OutlinedButton(
-    //               onPressed: () {},
-    //               child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text(_cinemas[index].name,
-    //                       style:
-    //                       const TextStyle(fontSize: 22, color: Colors.black)),
-    //                   Text("Address: ${_cinemas[index].address}",
-    //                       style: const TextStyle(
-    //                           fontSize: 16, color: Colors.orange)),
-    //                 ],
-    //               ),
-    //             ),
-    //             const SizedBox(
-    //               height: 30,
-    //             ),
-    //           ]);
-    //         }),
-    //   );
-    // }
   }
 }
+/*
+else {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("-Step 2-"),
+          centerTitle: true,
+        ),
+        body: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black, height: 10, thickness: 2,),
+            itemCount: _cinemas.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(children: [
+                OutlinedButton(
+                  onPressed: () {},
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_cinemas[index].name,
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.black)),
+                      Text("Address: ${_cinemas[index].address}",
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.orange)),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ]);
+            }),
+      );
+ */

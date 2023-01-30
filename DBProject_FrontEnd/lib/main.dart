@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/routes/cinema_list.dart';
 import 'package:db_roject_frontend/routes/welcome.dart';
+import 'package:db_roject_frontend/routes/actions_with_cinema.dart';
 import 'routes/select_city.dart';
 import 'routes/sign_up.dart';
 import 'routes/log_in.dart';
@@ -29,7 +30,8 @@ void main() {
         '/': (context) => const Welcome(),
         '/log_in': (context) => Authorization(),
         '/register': (context) => SignUp(),
-        '/cities': (context) => SelectCity()
+        '/cities': (context) => SelectCity(),
+        '/cinema_actions': (context) => ActionWithCinema(),
       },
     ),
   );
