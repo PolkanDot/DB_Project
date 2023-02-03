@@ -45,6 +45,21 @@ class Welcome extends StatelessWidget {
                       Navigator.pushNamed(context, '/register');
                     },
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 25.0),
+                  child: MaterialButton(
+                    color: Theme.of(context).colorScheme.secondary,
+                    height: 50.0,
+                    minWidth: 150.0,
+                    child: Text(
+                      "KeyBoard",
+                      style: _sizeTextWhite,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/keyboard');
+                    },
+                  ),
                 )
               ],
             )));
