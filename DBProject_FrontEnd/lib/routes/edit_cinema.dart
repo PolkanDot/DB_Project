@@ -1,36 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/callApi/delete_cinema.dart';
-import 'cinema_list.dart';
-import '../callApi/createCinema.dart';
 import '../callApi/editCinema.dart';
 import '../models/cinema.dart';
 
-class ActionWithCinema extends StatefulWidget {
-  const ActionWithCinema({Key? key}) : super(key: key);
+class EditCinema extends StatelessWidget {
+  EditCinema({Key? key}) : super(key: key);
 
-  @override
-  State<ActionWithCinema> createState() => _ActionWithCinemaState();
-}
-
-class _ActionWithCinemaState extends State<ActionWithCinema> {
   final _formKey = GlobalKey<FormState>();
-  bool _isButtonEnabled = true;
-  Cinema? _cinema;
-
-  @override
-  void initState() {}
-
-  @override
-  void didChangeDependencies() {
-    _cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (_cinema!.idCinema == 0) {
-      _isButtonEnabled = false;
-    }
+    Cinema cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit cinema data"),
@@ -43,9 +23,9 @@ class _ActionWithCinemaState extends State<ActionWithCinema> {
             children: [
               // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
               TextFormField(
-                onChanged: (String value) => {_cinema!.name = value},
+                onChanged: (String value) => {cinema.name = value},
                 decoration: const InputDecoration(labelText: "Cinema name"),
-                initialValue: _cinema!.name,
+                initialValue: cinema.name,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter cinema name';
@@ -54,9 +34,9 @@ class _ActionWithCinemaState extends State<ActionWithCinema> {
                 },
               ),
               TextFormField(
-                onChanged: (String value) => {_cinema!.cityName = value},
+                onChanged: (String value) => {cinema.cityName = value},
                 decoration: const InputDecoration(labelText: "City name"),
-                initialValue: _cinema!.cityName,
+                initialValue: cinema.cityName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter city name';
@@ -65,9 +45,9 @@ class _ActionWithCinemaState extends State<ActionWithCinema> {
                 },
               ),
               TextFormField(
-                onChanged: (String value) => {_cinema!.address = value},
+                onChanged: (String value) => {cinema.address = value},
                 decoration: const InputDecoration(labelText: "Address"),
-                initialValue: _cinema!.address,
+                initialValue: cinema.address,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter address of cinema';
@@ -79,28 +59,18 @@ class _ActionWithCinemaState extends State<ActionWithCinema> {
                 alignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: _isButtonEnabled
-                        ? () {
-                      deleteCinema(_cinema!.idCinema);
-                      Navigator.pop(context);
-                    }
-                        : null,
+                    onPressed: () {
+                      deleteCinema(cinema.idCinema);
+                      Navigator.pushReplacementNamed(context, '/list_cinemas',
+                          arguments: cinema.cityName);
+                    },
                     child: const Text("DELETE"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      if (_cinema!.idCinema == 0) {
-                        _cinema = await createCinema(
-                            _cinema!.name, _cinema!.cityName, _cinema!.address);
-                        setState(() {
-                          _isButtonEnabled = true;
-                        });
-                        //Navigator.pop;
-                      } else {
-                        await editCinema(_cinema);
-                        //Navigator.pop;
-                      }
-                      Navigator.pushReplacementNamed(context, '/list_cinemas', arguments: _cinema!.cityName);
+                    onPressed: () {
+                      editCinema(cinema);
+                      Navigator.pushReplacementNamed(context, '/list_cinemas',
+                          arguments: cinema.cityName);
                     },
                     child: const Text("SAVE"),
                   ),

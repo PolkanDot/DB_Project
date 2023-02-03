@@ -11,7 +11,7 @@ class CinemaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () =>
-          Navigator.pushNamed(context, "/cinema_actions", arguments: cinema),
+          Navigator.pushNamed(context, "/edit_cinema", arguments: cinema),
       title: Text(cinema.name,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
       subtitle: Text("Address: ${cinema.address}",
@@ -21,11 +21,7 @@ class CinemaCard extends StatelessWidget {
 }
 
 class CinemaList extends StatefulWidget {
-  CinemaList({required this.cityName, required this.accountRole, Key? key})
-      : super(key: key);
-
-  final String cityName;
-  final int accountRole;
+  CinemaList({Key? key}) : super(key: key);
 
   @override
   State<CinemaList> createState() => _CinemaListState();
@@ -34,8 +30,10 @@ class CinemaList extends StatefulWidget {
 class _CinemaListState extends State<CinemaList> {
   List<Cinema> _cinemas = [];
 
+  String cityName = "";
+
   void getCinemas() async {
-    List<Cinema>? response = await getCinemasOfCity(widget.cityName);
+    List<Cinema>? response = await getCinemasOfCity(cityName);
     if (response != null) {
       setState(() {
         _cinemas = response;
@@ -45,15 +43,21 @@ class _CinemaListState extends State<CinemaList> {
 
   @override
   void initState() {
-    getCinemas();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    cityName = ModalRoute.of(context)?.settings.arguments as String;
+    getCinemas();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("-Admin page-"),
+        title: const Text("-Cinema admin page-"),
         centerTitle: true,
       ),
       body: ListView.separated(
@@ -68,7 +72,7 @@ class _CinemaListState extends State<CinemaList> {
             return CinemaCard(cinema: _cinemas[index]);
           }),
       floatingActionButton: OutlinedButton(
-        onPressed: () => Navigator.pushNamed(context, "/cinema_actions", arguments: Cinema(idCinema: 0, name: "",cityName: "", address: "", halls: [],)),
+        onPressed: () => Navigator.pushNamed(context, "/add_cinema"),
         child: const Icon(
           Icons.add,
           size: Checkbox.width * 3,

@@ -1,6 +1,5 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/routes/cinema_list.dart';
 import '../callApi/getCities.dart';
 
 class SelectCity extends StatefulWidget {
@@ -43,8 +42,6 @@ class _SelectCityState extends State<SelectCity> {
 
   @override
   Widget build(BuildContext context) {
-    final role = ModalRoute.of(context)?.settings.arguments as int;
-
     return Scaffold(
       appBar: AppBar(title: const Text("-Step 1-"),centerTitle: true,),
       body: SingleChildScrollView(
@@ -101,10 +98,7 @@ class _SelectCityState extends State<SelectCity> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (_selectedCity != "") {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CinemaList(cityName: _selectedCity, accountRole: role)));
+            Navigator.pushNamed(context, '/list_cinemas', arguments: _selectedCity);
           }
           formKey.currentState!.validate();
         },

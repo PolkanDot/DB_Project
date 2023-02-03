@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/routes/cinema_list.dart';
+import 'package:db_roject_frontend/routes/add_cinema.dart';
+import 'package:db_roject_frontend/routes/edit_cinema.dart';
 import 'package:db_roject_frontend/routes/welcome.dart';
 import 'package:db_roject_frontend/routes/actions_with_cinema.dart';
 import 'routes/select_city.dart';
@@ -34,6 +36,9 @@ void main() {
         '/cities': (context) => SelectCity(),
         '/cinema_actions': (context) => ActionWithCinema(),
         '/keyboard': (context) => MyHomePage(title: 'Virtual Keyboard Demo'),
+        '/list_cinemas': (context) => CinemaList(),
+        '/add_cinema': (context) => AddCinema(),
+        '/edit_cinema': (context) => EditCinema(),
       },
     ),
   );
