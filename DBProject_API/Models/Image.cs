@@ -9,7 +9,7 @@ public partial class Image
 
     public string Url { get; set; } = null!;
 
-    public short Type { get; set; }
+    public short Type { get; set; } // 0 - account 1 - film 2 - actor 
 
     public int IdEntity { get; set; }
 

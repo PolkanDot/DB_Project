@@ -155,6 +155,59 @@ namespace API
              await db.Cinemas.Select(cinema => cinema.CityName).Distinct().ToListAsync()
             );
 
+            ////////////// Actors functions
+
+            app.MapGet("/actors", async (PlaceBookingContext db) =>
+             await db.Actors.ToListAsync());
+
+            app.MapPost("/actor", async (Actor inputActor, PlaceBookingContext db) =>
+            {
+                Actor newAct = new();
+                newAct.Name = inputActor.Name;
+                
+                db.Actors.Add(newAct);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newAct);
+            });
+
+            ////////////// Role functions
+
+            app.MapGet("/roles", async (PlaceBookingContext db) =>
+             await db.Roles.ToListAsync());
+
+            app.MapPost("/role", async (Role inputRole, PlaceBookingContext db) =>
+            {
+                Role newRole = new();
+                newRole.IdActor = inputRole.IdActor;
+                newRole.IdFilm = inputRole.IdFilm;
+                newRole.NamePersonage = inputRole.NamePersonage;
+
+                db.Roles.Add(newRole);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newRole);
+            });
+
+            ////////////// Film functions
+
+            app.MapGet("/films", async (PlaceBookingContext db) =>
+             await db.Films.ToListAsync());
+
+            app.MapPost("/film", async (Film inputFilm, PlaceBookingContext db) =>
+            {
+                Film newFilm = new();
+                newFilm.Duration = inputFilm.Duration;
+                newFilm.Name = inputFilm.Name;
+                newFilm.AgeRating = inputFilm.AgeRating;
+                newFilm.Description = inputFilm.Description;
+
+                db.Films.Add(newFilm);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newFilm);
+            });
+
             app.Run();
         }
     }
