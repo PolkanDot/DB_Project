@@ -36,7 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   dropdown_textfield: ^1.0.7
-  virtual_keyboard_multi_language: ^1.0.3
 
 dev_dependencies:
   json_serializable: ^6.5.4

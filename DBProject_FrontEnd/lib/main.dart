@@ -8,7 +8,6 @@ import 'package:db_roject_frontend/routes/actions_with_cinema.dart';
 import 'routes/select_city.dart';
 import 'routes/sign_up.dart';
 import 'routes/log_in.dart';
-import 'routes/keyboard_test.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -35,7 +34,6 @@ void main() {
         '/register': (context) => SignUp(),
         '/cities': (context) => SelectCity(),
         '/cinema_actions': (context) => ActionWithCinema(),
-        '/keyboard': (context) => MyHomePage(title: 'Virtual Keyboard Demo'),
         '/list_cinemas': (context) => CinemaList(),
         '/add_cinema': (context) => AddCinema(),
         '/edit_cinema': (context) => EditCinema(),
