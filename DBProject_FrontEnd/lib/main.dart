@@ -4,10 +4,10 @@ import 'package:db_roject_frontend/routes/cinema_list.dart';
 import 'package:db_roject_frontend/routes/add_cinema.dart';
 import 'package:db_roject_frontend/routes/edit_cinema.dart';
 import 'package:db_roject_frontend/routes/welcome.dart';
-import 'package:db_roject_frontend/routes/actions_with_cinema.dart';
 import 'routes/select_city.dart';
 import 'routes/sign_up.dart';
 import 'routes/log_in.dart';
+import 'routes/admin_films_list.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -33,10 +33,10 @@ void main() {
         '/log_in': (context) => Authorization(),
         '/register': (context) => SignUp(),
         '/cities': (context) => SelectCity(),
-        '/cinema_actions': (context) => ActionWithCinema(),
         '/list_cinemas': (context) => CinemaList(),
         '/add_cinema': (context) => AddCinema(),
         '/edit_cinema': (context) => EditCinema(),
+        '/admin_list_films': (context) => AdminFilmList(),
       },
     ),
   );

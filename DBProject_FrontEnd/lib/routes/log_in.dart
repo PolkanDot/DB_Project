@@ -51,7 +51,14 @@ class Authorization extends StatelessWidget {
                     account = await checkingExistenceOfAccount(_email, _pw);
                     if ((account != null)) {
                       role = account!.role;
-                      Navigator.pushNamed(context, "/cities", arguments: role);
+                      switch (role) {
+                        case 2:
+                          Navigator.pushNamed(context, "/cities", arguments: role);
+                          break;
+                        case 3:
+                          Navigator.pushNamed(context, "/admin_list_films");
+                          break;
+                      }
                     }
                     //if (await checkRegisterOfEmail(_email, _pw) != null) {
                     else {
