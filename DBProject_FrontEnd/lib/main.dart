@@ -1,13 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/routes/cinema_list.dart';
-import 'package:db_roject_frontend/routes/add_cinema.dart';
-import 'package:db_roject_frontend/routes/edit_cinema.dart';
-import 'package:db_roject_frontend/routes/welcome.dart';
-import 'routes/select_city.dart';
+import 'routes/welcome.dart';
 import 'routes/sign_up.dart';
 import 'routes/log_in.dart';
+import 'routes/select_city.dart';
+import 'routes/cinemas_list.dart';
+import 'routes/add_cinema.dart';
+import 'routes/edit_cinema.dart';
 import 'routes/admin_films_list.dart';
+import 'routes/halls_list.dart';
+import 'routes/add_hall.dart';
+import 'routes/edit_hall.dart';
+import 'routes/places_list.dart';
+import 'routes/add_place.dart';
+import 'routes/edit_place.dart';
+
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -37,6 +44,12 @@ void main() {
         '/add_cinema': (context) => AddCinema(),
         '/edit_cinema': (context) => EditCinema(),
         '/admin_list_films': (context) => AdminFilmList(),
+        '/list_halls': (context) => HallsList(),
+        '/add_hall': (context) => AddHall(),
+        '/edit_hall': (context) => EditHall(),
+        '/list_places': (context) => PlacesList(),
+        '/add_place': (context) => AddPlace(),
+        '/edit_place': (context) => EditPlace(),
       },
     ),
   );

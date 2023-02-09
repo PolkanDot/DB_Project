@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../callApi/delete_cinema.dart';
+import '../callApi/delete_hall_func.dart';
+import '../callApi/edit_hall_func.dart';
 import '../models/data_for_routes.dart';
-import '../callApi/edit_cinema_func.dart';
 
-class EditCinema extends StatelessWidget {
-  EditCinema({Key? key}) : super(key: key);
+class EditHall extends StatelessWidget {
+  EditHall({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -12,11 +12,10 @@ class EditCinema extends StatelessWidget {
   Widget build(BuildContext context) {
     RoutesData routesData =
     ModalRoute.of(context)?.settings.arguments as RoutesData;
-    //Cinema cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit cinema data"),
+          title: const Text("Edit hall data"),
         ),
         body: Form(
             key: _formKey,
@@ -26,36 +25,37 @@ class EditCinema extends StatelessWidget {
               children: [
                 // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
                 TextFormField(
-                  onChanged: (String value) => {routesData.cinema.name = value},
-                  decoration: const InputDecoration(labelText: "Cinema name"),
-                  initialValue: routesData.cinema.name,
+                  onChanged: (String value) =>
+                  {routesData.hall.number = int.parse(value)},
+                  decoration: const InputDecoration(labelText: "Hall number"),
+                  initialValue: routesData.hall.number.toString(),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter cinema name';
+                      return 'Enter hall number';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   onChanged: (String value) =>
-                  {routesData.cinema.cityName = value},
-                  decoration: const InputDecoration(labelText: "City name"),
-                  initialValue: routesData.cinema.cityName,
+                  {routesData.hall.type = int.parse(value)},
+                  decoration: const InputDecoration(labelText: "Hall type"),
+                  initialValue: routesData.hall.type.toString(),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter city name';
+                      return 'Enter hall type';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   onChanged: (String value) =>
-                  {routesData.cinema.address = value},
-                  decoration: const InputDecoration(labelText: "Address"),
-                  initialValue: routesData.cinema.address,
+                  {routesData.hall.capacity = int.parse(value)},
+                  decoration: const InputDecoration(labelText: "Hall capacity"),
+                  initialValue: routesData.hall.capacity.toString(),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter address of cinema';
+                      return 'Enter hall capacity';
                     }
                     return null;
                   },
@@ -65,8 +65,8 @@ class EditCinema extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        deleteCinema(routesData.cinema.idCinema);
-                        Navigator.pushReplacementNamed(context, '/list_cinemas',
+                        deleteHall(routesData.hall.idHall);
+                        Navigator.pushReplacementNamed(context, '/list_halls',
                             arguments: routesData);
                       },
                       child: const Text("DELETE"),
@@ -74,16 +74,16 @@ class EditCinema extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // спросить пользователя сохранять ли изменения, если да вызываем функцию:
-                        editCinema(routesData.cinema);
-                        Navigator.pushReplacementNamed(context, '/list_halls',
+                        editHall(routesData.hall);
+                        Navigator.pushReplacementNamed(context, '/list_places',
                             arguments: routesData);
                       },
-                      child: const Text("EDIT HALLS->"),
+                      child: const Text("EDIT PLACES->"),
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        editCinema(routesData.cinema);
-                        Navigator.pushReplacementNamed(context, '/list_cinemas',
+                        editHall(routesData.hall);
+                        Navigator.pushReplacementNamed(context, '/list_halls',
                             arguments: routesData);
                       },
                       child: const Text("SAVE"),
@@ -94,7 +94,7 @@ class EditCinema extends StatelessWidget {
             )),
       ),
       onWillPop: () async {
-        Navigator.pushReplacementNamed(context, '/list_cinemas',
+        Navigator.pushReplacementNamed(context, '/list_halls',
             arguments: routesData);
         return Future.value(true);
       },
