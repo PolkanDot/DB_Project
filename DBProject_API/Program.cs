@@ -1,5 +1,7 @@
 using API.Models;
 using WorkFunctions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
@@ -205,9 +207,9 @@ namespace API
                 return await db.Places.Where(place => place.IdHall == idHall).ToListAsync();
             });
 
-            /*app.MapGet("/placeExistenceCheck", async (Place inputPlace, PlaceBookingContext db) =>
+            app.MapPost("/placeExistenceCheck", async ([FromBody] Place inputPlace, PlaceBookingContext db) =>
                 await db.Places.FirstOrDefaultAsync(place => place.IdHall == inputPlace.IdHall && place.Row == inputPlace.Row && place.SeatNumber == inputPlace.SeatNumber)
-                    is Place truePlace ? Results.Ok(truePlace) : Results.NotFound());*/
+                    is Place truePlace ? Results.Ok(truePlace) : Results.NotFound());
 
             app.MapPost("/place", async (Place inputPlace, PlaceBookingContext db) =>
             {
@@ -266,6 +268,30 @@ namespace API
                 return Results.Ok(newAct);
             });
 
+            app.MapPut("/editActor", async (Actor inputActor, PlaceBookingContext db) =>
+            {
+                var editActor = await db.Actors.FindAsync(inputActor.IdActor);
+                if (editActor is null)
+                {
+                    return Results.NotFound();
+                }
+                editActor.Name = inputActor.Name;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editActor);
+            });
+
+            app.MapDelete("/actor/{idActor}", async (int idActor, PlaceBookingContext db) =>
+            {
+                if (await db.Actors.FindAsync(idActor) is Actor actor)
+                {
+                    db.Actors.Remove(actor);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(actor);
+                }
+                return Results.NotFound();
+            });
+
             ////////////// Role functions
 
             app.MapGet("/roles", async (PlaceBookingContext db) =>
@@ -282,6 +308,32 @@ namespace API
                 await db.SaveChangesAsync();
 
                 return Results.Ok(newRole);
+            });
+
+            app.MapPut("/editRole", async (Role inputRole, PlaceBookingContext db) =>
+            {
+                var editRole = await db.Roles.FindAsync(inputRole.IdRole);
+                if (editRole is null)
+                {
+                    return Results.NotFound();
+                }
+                editRole.IdActor = inputRole.IdActor;
+                editRole.IdFilm = inputRole.IdFilm;
+                editRole.NamePersonage = inputRole.NamePersonage;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editRole);
+            });
+
+            app.MapDelete("/role/{idRole}", async (int idRole, PlaceBookingContext db) =>
+            {
+                if (await db.Roles.FindAsync(idRole) is Role role)
+                {
+                    db.Roles.Remove(role);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(role);
+                }
+                return Results.NotFound();
             });
 
             ////////////// Film functions
@@ -301,6 +353,33 @@ namespace API
                 await db.SaveChangesAsync();
 
                 return Results.Ok(newFilm);
+            });
+
+            app.MapPut("/editFilm", async (Film inputFilm, PlaceBookingContext db) =>
+            {
+                var editFilm = await db.Films.FindAsync(inputFilm.IdFilm);
+                if (editFilm is null)
+                {
+                    return Results.NotFound();
+                }
+                editFilm.Duration = inputFilm.Duration;
+                editFilm.Name = inputFilm.Name;
+                editFilm.AgeRating = inputFilm.AgeRating;
+                editFilm.Description = inputFilm.Description;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editFilm);
+            });
+
+            app.MapDelete("/film/{idFilm}", async (int idFilm, PlaceBookingContext db) =>
+            {
+                if (await db.Films.FindAsync(idFilm) is Film film)
+                {
+                    db.Films.Remove(film);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(film);
+                }
+                return Results.NotFound();
             });
 
             app.Run();
