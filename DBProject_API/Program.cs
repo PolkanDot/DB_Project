@@ -257,6 +257,10 @@ namespace API
             app.MapGet("/actors", async (PlaceBookingContext db) =>
              await db.Actors.ToListAsync());
 
+            app.MapGet("/actor/{idActor}", async (int idActor, PlaceBookingContext db) =>
+                await db.Actors.FirstOrDefaultAsync(act => act.IdActor == idActor)
+                    is Actor actor ? Results.Ok(actor) : Results.NotFound());
+
             app.MapPost("/actor", async (Actor inputActor, PlaceBookingContext db) =>
             {
                 Actor newAct = new();
@@ -296,6 +300,11 @@ namespace API
 
             app.MapGet("/roles", async (PlaceBookingContext db) =>
              await db.Roles.ToListAsync());
+
+            app.MapGet("/role/{idFilm}", async (int idFilm, PlaceBookingContext db) =>
+            {
+                return await db.Roles.Where(role => role.IdFilm == idFilm).ToListAsync();
+            });
 
             app.MapPost("/role", async (Role inputRole, PlaceBookingContext db) =>
             {
