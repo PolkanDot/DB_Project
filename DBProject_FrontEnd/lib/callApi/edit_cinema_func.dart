@@ -4,8 +4,7 @@ import '../models/cinema.dart';
 
 String baseUrl = 'https://10.0.2.2:7172/editCinema';
 
-Future<Cinema?> editCinema(
-    Cinema? cinema) async {
+Future<Cinema?> editCinema(Cinema? cinema) async {
   try {
     if (cinema != null) {
       Response response = await Dio().put(baseUrl, data: {

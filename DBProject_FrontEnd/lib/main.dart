@@ -1,16 +1,28 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+
 import 'routes/welcome.dart';
 import 'routes/sign_up.dart';
 import 'routes/log_in.dart';
+
 import 'routes/select_city.dart';
+
 import 'routes/cinemas_list.dart';
 import 'routes/add_cinema.dart';
 import 'routes/edit_cinema.dart';
+
 import 'routes/admin_films_list.dart';
+import 'routes/edit_film.dart';
+import 'routes/add_film.dart';
+
+import 'routes/add_actor.dart';
+
+import 'routes/admin_roles_list.dart';
+
 import 'routes/halls_list.dart';
 import 'routes/add_hall.dart';
 import 'routes/edit_hall.dart';
+
 import 'routes/places_list.dart';
 import 'routes/add_place.dart';
 import 'routes/edit_place.dart';
@@ -44,12 +56,16 @@ void main() {
         '/add_cinema': (context) => AddCinema(),
         '/edit_cinema': (context) => EditCinema(),
         '/admin_list_films': (context) => AdminFilmList(),
+        '/edit_film': (context) => EditFilm(),
         '/list_halls': (context) => HallsList(),
         '/add_hall': (context) => AddHall(),
         '/edit_hall': (context) => EditHall(),
         '/list_places': (context) => PlacesList(),
         '/add_place': (context) => AddPlace(),
         '/edit_place': (context) => EditPlace(),
+        '/add_film': (context) => AddFilm(),
+        '/add_actor': (context) => AddActor(),
+        '/admin_list_roles': (context) => AdminRoleList(),
       },
     ),
   );

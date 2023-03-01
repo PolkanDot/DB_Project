@@ -22,8 +22,7 @@ class CinemaCard extends StatelessWidget {
             cityName: cinema.cityName,
             address: cinema.address,
             halls: cinema.halls);
-        Navigator.pushNamed(context, "/edit_cinema",
-            arguments: localRoutesData);
+        Navigator.pushNamed(context, "/edit_cinema", arguments: localRoutesData);
       },
       title: Text(cinema.name,
           style: const TextStyle(fontSize: 22, color: Colors.black)),

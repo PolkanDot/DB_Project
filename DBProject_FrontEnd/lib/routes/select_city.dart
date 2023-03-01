@@ -93,7 +93,7 @@ class _SelectCityState extends State<SelectCity> {
                       readOnly: false,
                       controller: _cnt,
                       clearOption: true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       clearIconProperty: IconProperty(color: Colors.green),
                       validator: (value) {

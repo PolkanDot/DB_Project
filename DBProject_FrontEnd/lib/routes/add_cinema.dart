@@ -25,10 +25,10 @@ class AddCinema extends StatelessWidget {
                   TextFormField(
                     onChanged: (String value) => {cinema.name = value},
                     decoration: const InputDecoration(labelText: "Cinema name"),
-                    initialValue: cinema.name,
+                    initialValue: "",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Enter cinema name';
+                        return 'Enter film name';
                       }
                       return null;
                     },
