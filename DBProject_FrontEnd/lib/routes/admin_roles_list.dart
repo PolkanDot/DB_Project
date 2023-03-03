@@ -5,17 +5,24 @@ import '../models/role.dart';
 import '../models/actor.dart';
 import '../models/film.dart';
 
-class RoleCard extends StatelessWidget {
+class RoleCard extends StatefulWidget {
   RoleCard({required this.role, Key? key}) : super(key: key);
 
   final Role role;
 
+  @override
+  State<RoleCard> createState() => _RoleCardState();
+}
+
+class _RoleCardState extends State<RoleCard> {
   Actor? actor;
 
   void getActor() async {
-    Actor? response = await getActorByIdActor(role.idActor);
+    Actor? response = await getActorByIdActor(widget.role.idActor);
     if (response != null) {
-      actor = response;
+      setState(() {
+        actor = response;
+      });
     }
   }
 
@@ -25,9 +32,9 @@ class RoleCard extends StatelessWidget {
     return ListTile(
       onTap: () {print(actor!.name);},
           //Navigator.pushNamed(context, "/edit_film", arguments: film),
-      title: Text(role.namePersonage,
+      title: Text(widget.role.namePersonage,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
-      subtitle: Text("Actor: ",
+      subtitle: Text("Actor: ${actor!.name}",
           style: const TextStyle(fontSize: 16, color: Colors.orange)),
     );
   }
