@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/film.dart';
+import 'package:db_roject_frontend/callApi/create_film.dart';
 
 class AddFilm extends StatelessWidget {
   AddFilm({Key? key}) : super(key: key);
@@ -102,6 +103,34 @@ class AddFilm extends StatelessWidget {
                         },
                         child: const Text("ADD ROLES->"),
                       ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if ((film!.name != "") & (film!.duration != ""))
+                            {
+                              createFilm(film!.name, film!.duration,
+                                  film!.ageRating, film!.description);
+                              Navigator.pushReplacementNamed(context, '/admin_list_films');
+                            }
+                          else
+                            {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text("Некорректные входные данные"),
+                                    content:
+                                    const Text("Обязательно заполните название и продолжительность"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context),
+                                        child: const Text('Понял'),
+                                      )
+                                    ],
+                                  ));
+                            }
+                        },
+                        child: const Text("SAVE"),
+                      )
                     ]))),
         onWillPop: () async {
           Navigator.pushReplacementNamed(context, '/admin_list_films');
