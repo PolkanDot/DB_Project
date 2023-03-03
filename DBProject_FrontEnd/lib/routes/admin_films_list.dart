@@ -86,9 +86,9 @@ class _AdminFilmListState extends State<AdminFilmList> {
                   ),
                   FloatingActionButton(
                     child: Icon(
-                        Icons.person_add
+                        Icons.people
                     ),
-                    onPressed: () => Navigator.pushReplacementNamed(context, '/add_actor'),
+                    onPressed: () => Navigator.pushReplacementNamed(context, '/admin_list_actors'),
                     heroTag: null,
                   )
                 ]
