@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../callApi/delete_role_func.dart';
-import '../models/role.dart';
 import '../callApi/edit_role_func.dart';
+import '../models/film_and_role_data.dart';
 
-class EditCinema extends StatelessWidget {
-  EditCinema({Key? key}) : super(key: key);
+class EditRole extends StatelessWidget {
+  EditRole({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    Role role = ModalRoute.of(context)?.settings.arguments as Role;
+    FilmAndRole filmAndRole = ModalRoute.of(context)?.settings.arguments as FilmAndRole;
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
@@ -24,9 +24,9 @@ class EditCinema extends StatelessWidget {
               children: [
                 // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
                 TextFormField(
-                  onChanged: (String value) => {role.namePersonage = value},
+                  onChanged: (String value) => {filmAndRole.role.namePersonage = value},
                   decoration: const InputDecoration(labelText: "Cinema name"),
-                  initialValue: role.namePersonage,
+                  initialValue: filmAndRole.role.namePersonage,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter role name';
@@ -38,19 +38,19 @@ class EditCinema extends StatelessWidget {
                   alignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () {/*
-                        deleteRole(role.idRole);
-                        Navigator.pushReplacementNamed(context, '/list_cinemas',
-                            arguments: routesData);*/
+                      onPressed: () {
+                        deleteRole(filmAndRole.role.idRole);
+                        Navigator.pushReplacementNamed(context, '/admin_list_roles',
+                            arguments: filmAndRole.film);
                       },
                       child: const Text("DELETE"),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         // спросить пользователя сохранять ли изменения, если да вызываем функцию:
-                        /*editRole(role);
-                        Navigator.pushReplacementNamed(context, '/list_halls',
-                            arguments: routesData);*/
+                        editRole(filmAndRole.role);
+                        Navigator.pushReplacementNamed(context, '/admin_list_roles',
+                            arguments: filmAndRole.film);
                       },
                       child: const Text("SAVE"),
                     )
@@ -60,8 +60,8 @@ class EditCinema extends StatelessWidget {
             )),
       ),
       onWillPop: () async {
-        Navigator.pushReplacementNamed(context, '/list_cinemas',
-            arguments: routesData);
+        Navigator.pushReplacementNamed(context, '/admin_list_roles',
+            arguments: filmAndRole.film);
         return Future.value(true);
       },
     );

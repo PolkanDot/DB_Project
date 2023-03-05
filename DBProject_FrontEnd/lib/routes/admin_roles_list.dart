@@ -4,11 +4,13 @@ import 'package:db_roject_frontend/callApi/get_actor_by_idActor.dart';
 import '../models/role.dart';
 import '../models/actor.dart';
 import '../models/film.dart';
+import '../models/film_and_role_data.dart';
 
 class RoleCard extends StatefulWidget {
-  RoleCard({required this.role, Key? key}) : super(key: key);
+  RoleCard({required this.film, required this.role, Key? key}) : super(key: key);
 
-  final Role role;
+  Role role;
+  Film film;
 
   @override
   State<RoleCard> createState() => _RoleCardState();
@@ -17,24 +19,31 @@ class RoleCard extends StatefulWidget {
 class _RoleCardState extends State<RoleCard> {
   Actor? actor;
 
+  FilmAndRole filmAndRole = FilmAndRole(
+      Film(idFilm: 0, name: "", duration: "", ageRating: 0,
+          description: "", roles: [], sessions: []),
+      Role(idRole: 0, idActor: 0, idFilm: 0, namePersonage: ""));
+
   void getActor() async {
     Actor? response = await getActorByIdActor(widget.role.idActor);
-    if (response != null) {
-      setState(() {
-        actor = response;
-      });
-    }
+    setState(() {
+      actor = response;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     getActor();
     return ListTile(
-      onTap: () {print(actor!.name);},
-          //Navigator.pushNamed(context, "/edit_film", arguments: film),
+      onTap: ()
+        {
+          filmAndRole.film = widget.film;
+          filmAndRole.role = widget.role;
+          Navigator.pushNamed(context, "/edit_role", arguments: filmAndRole);
+        },
       title: Text(widget.role.namePersonage,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
-      subtitle: Text("Actor: ${actor!.name}",
+      subtitle: Text("Actor: ${actor?.name}",
           style: const TextStyle(fontSize: 16, color: Colors.orange)),
     );
   }
@@ -50,12 +59,19 @@ class AdminRoleList extends StatefulWidget {
 class _AdminRoleListState extends State<AdminRoleList> {
   List<Role> _roles = [];
 
+  FilmAndRole filmAndRole = FilmAndRole(
+      Film(idFilm: 0, name: "", duration: "", ageRating: 0,
+          description: "", roles: [], sessions: []),
+      Role(idRole: 0, idActor: 0, idFilm: 0, namePersonage: ""));
+
   void getAllRoles() async {
     Film film = ModalRoute.of(context)?.settings.arguments as Film;
+    filmAndRole.film = film;
     List<Role>? response = await getRolesOfFilm(film.idFilm);
     if (response != null) {
       setState(() {
         _roles = response;
+        print(_roles.toString());
       });
     }
   }
@@ -89,7 +105,7 @@ class _AdminRoleListState extends State<AdminRoleList> {
                 itemCount: _roles.length,
                 padding: const EdgeInsets.all(20),
                 itemBuilder: (BuildContext context, int index) {
-                  return RoleCard(role: _roles[index]);
+                  return RoleCard(film: film, role: _roles[index]);
                 }),
           floatingActionButton: OutlinedButton(
             onPressed: () {}, //Navigator.pushNamed(context, "/add_cinema", arguments: routesData),
