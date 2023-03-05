@@ -16,6 +16,7 @@ import 'routes/edit_film.dart';
 import 'routes/add_film.dart';
 
 import 'routes/add_actor.dart';
+import 'routes/edit_actor.dart';
 import 'routes/admin_actors_list.dart';
 
 import 'routes/admin_roles_list.dart';
@@ -68,6 +69,7 @@ void main() {
         '/add_actor': (context) => AddActor(),
         '/admin_list_roles': (context) => AdminRoleList(),
         '/admin_list_actors': (context) => AdminActorList(),
+        '/edit_actor': (context) => EditActor(),
       },
     ),
   );

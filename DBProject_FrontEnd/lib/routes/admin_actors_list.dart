@@ -10,8 +10,8 @@ class ActorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
-          //Navigator.pushNamed(context, "/edit_film", arguments: film),
+      onTap: () =>
+          Navigator.pushNamed(context, "/edit_actor", arguments: actor),
       title: Text(actor.name,
           style: const TextStyle(fontSize: 22, color: Colors.black))
     );

@@ -42,14 +42,34 @@ class AddActor extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          createActor(actor!.name);
-                          Navigator.pushReplacementNamed(context, '/admin_list_films');
+                          if (actor!.name != "")
+                            {
+                              createActor(actor!.name);
+                              Navigator.pushReplacementNamed(context, '/admin_list_actors');
+                            }
+                          else
+                            {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text("Некорректные входные данные"),
+                                    content:
+                                    const Text("Обязательно введите имя"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context),
+                                        child: const Text('Понял'),
+                                      )
+                                    ],
+                                  ));
+                            }
                         },
                         child: const Text("SAVE"),
                       ),
                     ]))),
         onWillPop: () async {
-          Navigator.pushReplacementNamed(context, '/admin_list_films');
+          Navigator.pushReplacementNamed(context, '/admin_list_actors');
           return Future.value(true);
         }
     );
