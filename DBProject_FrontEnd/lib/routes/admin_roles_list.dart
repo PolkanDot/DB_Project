@@ -32,8 +32,13 @@ class _RoleCardState extends State<RoleCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getActor();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       onTap: ()
         {
@@ -108,7 +113,7 @@ class _AdminRoleListState extends State<AdminRoleList> {
                   return RoleCard(film: film, role: _roles[index]);
                 }),
           floatingActionButton: OutlinedButton(
-            onPressed: () {}, //Navigator.pushNamed(context, "/add_cinema", arguments: routesData),
+            onPressed: () => Navigator.pushNamed(context, "/add_role", arguments: film),
             child: const Icon(
               Icons.add,
               size: Checkbox.width * 3,
