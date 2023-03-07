@@ -36,8 +36,7 @@ class _SelectCityState extends State<SelectCity> {
     List<String>? response = await getCities();
     if (response != null) {
       for (String cityName in response) {
-        _citiesNamesList
-            .add(DropDownValueModel(name: cityName, value: cityName));
+        _citiesNamesList.add(DropDownValueModel(name: cityName, value: cityName));
       }
     }
     setState(() {});

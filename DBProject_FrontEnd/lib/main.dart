@@ -21,6 +21,7 @@ import 'routes/admin_actors_list.dart';
 
 import 'routes/admin_roles_list.dart';
 import 'routes/edit_role.dart';
+import 'routes/add_role.dart';
 
 import 'routes/halls_list.dart';
 import 'routes/add_hall.dart';
@@ -72,6 +73,7 @@ void main() {
         '/admin_list_actors': (context) => AdminActorList(),
         '/edit_actor': (context) => EditActor(),
         '/edit_role': (context) => EditRole(),
+        '/add_role': (context) => AddRole(),
       },
     ),
   );
