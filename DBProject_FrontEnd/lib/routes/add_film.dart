@@ -95,11 +95,9 @@ class AddFilm extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-
-                          /*routesData.hall = (await createHall(hall!.idCinema,
-                          hall!.number, hall!.type, hall!.capacity))!;
-                      Navigator.pushReplacementNamed(context, '/list_places',
-                          arguments: routesData);*/
+                          createFilm(film!.name, film!.duration,
+                              film!.ageRating, film!.description);
+                          Navigator.pushNamed(context, "/add_role", arguments: film);
                         },
                         child: const Text("ADD ROLES->"),
                       ),
