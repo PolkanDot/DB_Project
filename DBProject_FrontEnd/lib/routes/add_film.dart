@@ -95,9 +95,29 @@ class AddFilm extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          createFilm(film!.name, film!.duration,
-                              film!.ageRating, film!.description);
-                          Navigator.pushNamed(context, "/add_role", arguments: film);
+                          if ((film!.name != "") & (film!.duration != ""))
+                          {
+                            createFilm(film!.name, film!.duration,
+                                film!.ageRating, film!.description);
+                            Navigator.pushNamed(context, "/add_role", arguments: film);
+                          }
+                          else
+                          {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text("Некорректные входные данные"),
+                                  content:
+                                  const Text("Обязательно заполните название и продолжительность"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context),
+                                      child: const Text('Понял'),
+                                    )
+                                  ],
+                                ));
+                          }
                         },
                         child: const Text("ADD ROLES->"),
                       ),
