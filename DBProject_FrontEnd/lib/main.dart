@@ -8,10 +8,12 @@ import 'routes/log_in.dart';
 import 'routes/select_city.dart';
 
 import 'routes/cinemas_list.dart';
+import 'routes/user_cinemas_list.dart';
 import 'routes/add_cinema.dart';
 import 'routes/edit_cinema.dart';
 
 import 'routes/admin_films_list.dart';
+import 'routes/user_films_list.dart';
 import 'routes/edit_film.dart';
 import 'routes/add_film.dart';
 
@@ -30,7 +32,9 @@ import 'routes/edit_hall.dart';
 import 'routes/places_list.dart';
 import 'routes/add_place.dart';
 import 'routes/edit_place.dart';
+import 'routes/select_place.dart';
 
+import 'routes/user_sessions_list.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -67,6 +71,10 @@ void main() {
         '/list_places': (context) => PlacesList(),
         '/add_place': (context) => AddPlace(),
         '/edit_place': (context) => EditPlace(),
+        '/user_list_cinemas': (context) => UserCinemaList(),
+        '/user_list_films': (context) => UserFilmsList(),
+        '/user_list_sessions': (context) => UserSessionsList(),
+        '/places': (context) => SelectPlace(),
         '/add_film': (context) => AddFilm(),
         '/add_actor': (context) => AddActor(),
         '/admin_list_roles': (context) => AdminRoleList(),
