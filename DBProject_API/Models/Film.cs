@@ -7,7 +7,7 @@ public partial class Film
 {
     public int IdFilm { get; set; }
 
-    public string Duration { get; set; }
+    public string Duration { get; set; } = null!;
 
     public string Name { get; set; } = null!;
 

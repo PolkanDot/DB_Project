@@ -1,9 +1,10 @@
 using API.Models;
-using WorkFunctions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Xml.Linq;
+using WorkFunctions;
 
 namespace API
 {
@@ -21,10 +22,6 @@ namespace API
 
             app.MapGet("/accounts", async (PlaceBookingContext db) =>
             await db.Accounts.ToListAsync());
-            
-            /*app.MapGet("/account/{IdAccount}", async (int idAccount, PlaceBookingContext db) =>
-                await db.Accounts.FirstOrDefaultAsync(acc => acc.IdAccount == idAccount)
-                    is Account account ? Results.Ok(account) : Results.NotFound());*/
 
             app.MapGet("/account/{Email}", async (string Email, PlaceBookingContext db) =>
                 await db.Accounts.FirstOrDefaultAsync(acc => acc.Email == Email)
@@ -32,7 +29,7 @@ namespace API
 
             app.MapGet("/account/{Email}/{Password}", async (string Email, string Password, PlaceBookingContext db) =>
                 await db.Accounts.FirstOrDefaultAsync(acc => acc.Email == Email && acc.Password == WorkFunctionsClass.Hashing(Password))
-                    is Account account ? Results.Ok(account) : Results.NotFound()) ;           
+                    is Account account ? Results.Ok(account) : Results.NotFound());
 
             app.MapPost("/account", async (Account inputAccount, PlaceBookingContext db) =>
             {
@@ -41,8 +38,8 @@ namespace API
                 newAcc.Email = inputAccount.Email;
                 newAcc.Password = WorkFunctionsClass.Hashing(inputAccount.Password);
                 newAcc.DateOfBirthday = inputAccount.DateOfBirthday;
-                newAcc.Role = inputAccount.Role;
                 newAcc.IdImage = inputAccount.IdImage;
+                newAcc.Role = inputAccount.Role;
                 db.Accounts.Add(newAcc);
                 await db.SaveChangesAsync();
 
@@ -56,7 +53,6 @@ namespace API
                 {
                     return Results.NotFound();
                 }
-
                 editAccount.Name = inputAccount.Name;
                 editAccount.Email = inputAccount.Email;
                 editAccount.Password = inputAccount.Password;
@@ -67,7 +63,7 @@ namespace API
                 return Results.Ok(editAccount);
             });
 
-            app.MapDelete("/account/{IdAccount}", async (int idAccount, PlaceBookingContext db) =>
+            app.MapDelete("/account/{idAccount}", async (int idAccount, PlaceBookingContext db) =>
             {
                 if (await db.Accounts.FindAsync(idAccount) is Account account)
                 {
@@ -80,8 +76,11 @@ namespace API
 
             ////////////// Image functions
 
-            app.MapGet("/image/{IdImage}", async (int IdImage, PlaceBookingContext db) =>
-            await db.Images.FindAsync(IdImage)
+            app.MapGet("/images", async (PlaceBookingContext db) =>
+            await db.Images.ToListAsync());
+
+            app.MapGet("/image/{idImage}", async (int idImage, PlaceBookingContext db) =>
+            await db.Images.FindAsync(idImage)
                     is Image image ? Results.Ok(image) : Results.NotFound());
 
             app.MapPost("/image", async (Image inputImage, PlaceBookingContext db) =>
@@ -93,19 +92,20 @@ namespace API
             });
 
             ////////////// Cinema functions
-            
-            app.MapGet("/cinemas", async (PlaceBookingContext db) =>
-            await db.Cinemas.ToListAsync());
 
             app.MapGet("/cinema/{cityName}", async (string cityName, PlaceBookingContext db) =>
             {
                 return await db.Cinemas.Where(cinema => cinema.CityName == cityName).ToListAsync();
             });
 
-
             app.MapGet("/cinema/{Name}/{CityName}", async (string Name, string CityName, PlaceBookingContext db) =>
                 await db.Cinemas.FirstOrDefaultAsync(cin => cin.Name == Name && cin.CityName == CityName)
                     is Cinema cinema ? Results.Ok(cinema) : Results.NotFound());
+
+
+            app.MapGet("/cinemas", async (PlaceBookingContext db) =>
+            await db.Cinemas.ToListAsync());
+
 
             app.MapPost("/cinema", async (Cinema inputCinema, PlaceBookingContext db) =>
             {
@@ -118,7 +118,8 @@ namespace API
                 await db.SaveChangesAsync();
 
                 return Results.Ok(newCinema);
-            });
+            }
+            );
 
             app.MapPut("/editCinema", async (Cinema inputCinema, PlaceBookingContext db) =>
             {
@@ -146,7 +147,7 @@ namespace API
                 return Results.NotFound();
             });
 
-            ////////////// Cities functions
+            ////////////// Get cities
 
             app.MapGet("/cities", async (PlaceBookingContext db) =>
              await db.Cinemas.Select(cinema => cinema.CityName).Distinct().ToListAsync()
@@ -207,8 +208,8 @@ namespace API
                 return await db.Places.Where(place => place.IdHall == idHall).ToListAsync();
             });
 
-            app.MapPost("/placeExistenceCheck", async ([FromBody] Place inputPlace, PlaceBookingContext db) =>
-                await db.Places.FirstOrDefaultAsync(place => place.IdHall == inputPlace.IdHall && place.Row == inputPlace.Row && place.SeatNumber == inputPlace.SeatNumber)
+            app.MapGet("/placeExistenceCheck/{idHall}/{row}/{seatNumber}", async (int idHall, int row, int seatNumber, PlaceBookingContext db) =>
+                await db.Places.FirstOrDefaultAsync(place => place.IdHall == idHall && place.Row == row && place.SeatNumber == seatNumber)
                     is Place truePlace ? Results.Ok(truePlace) : Results.NotFound());
 
             app.MapPost("/place", async (Place inputPlace, PlaceBookingContext db) =>
@@ -265,7 +266,7 @@ namespace API
             {
                 Actor newAct = new();
                 newAct.Name = inputActor.Name;
-                
+
                 db.Actors.Add(newAct);
                 await db.SaveChangesAsync();
 
@@ -389,6 +390,157 @@ namespace API
                     return Results.Ok(film);
                 }
                 return Results.NotFound();
+            });
+
+            ////////////// Session functions
+
+            app.MapGet("/sessions", async (PlaceBookingContext db) =>
+             await db.Sessions.ToListAsync());
+
+            app.MapGet("/sessions/{idCinema}", async (int idCinema, PlaceBookingContext db) =>
+            {
+                return await (from film in db.Films
+                              join session in db.Sessions on film.IdFilm equals session.IdFilm
+                              join hall in db.Halls on session.IdHall equals hall.IdHall
+                              where hall.IdCinema == idCinema
+                              select new
+                              {
+                                  idSession = session.IdSession,
+                                  idHall = session.IdHall,
+                                  hallNumber = hall.Number,
+                                  hallType = hall.Type,
+                                  dateTime = session.DateTime
+                              }).ToListAsync();
+            });
+
+            app.MapPost("/session", async (Session inputSession, PlaceBookingContext db) =>
+            {
+                Session newSession = new();
+                newSession.IdHall = inputSession.IdHall;
+                newSession.IdFilm = inputSession.IdFilm;
+                newSession.DateTime = inputSession.DateTime;
+
+                db.Sessions.Add(newSession);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newSession);
+            });
+
+            app.MapPut("/editSession", async (Session inputSession, PlaceBookingContext db) =>
+            {
+                var editSession = await db.Sessions.FindAsync(inputSession.IdSession);
+                if (editSession is null)
+                {
+                    return Results.NotFound();
+                }
+                editSession.IdHall = inputSession.IdHall;
+                editSession.IdFilm = inputSession.IdFilm;
+                editSession.DateTime = inputSession.DateTime;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editSession);
+            });
+
+            app.MapDelete("/session/{idSession}", async (int idSession, PlaceBookingContext db) =>
+            {
+                if (await db.Sessions.FindAsync(idSession) is Session session)
+                {
+                    db.Sessions.Remove(session);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(session);
+                }
+                return Results.NotFound();
+            });
+
+            ////////////// Get films, shown in the cinema
+
+            app.MapGet("/films/{idCinema}", async (int idCinema, PlaceBookingContext db) =>
+            {
+                return await (from film in db.Films
+                              join session in db.Sessions on film.IdFilm equals session.IdFilm
+                              join hall in db.Halls on session.IdHall equals hall.IdHall
+                              where hall.IdCinema == idCinema
+                              select film).ToListAsync();
+            });
+
+            ////////////// Get rows and seat numbers
+
+            app.MapGet("/rows/{idHall}", async (int idHall, PlaceBookingContext db) =>
+            {
+                return await (from place in db.Places
+                              where place.IdHall == idHall
+                              select place.Row).Distinct().ToListAsync();
+            }
+            );
+
+            app.MapGet("/seatNums/{idHall}/{rowNum}", async (int idHall, int rowNum, PlaceBookingContext db) =>
+            {
+                return await (from place in db.Places
+                              where place.IdHall == idHall && place.Row == rowNum
+                              select new
+                              {
+                                  idPlace = place.IdPlace,
+                                  seatNumber = place.SeatNumber
+                              }).ToListAsync();
+            }
+            );
+
+            ////////////// Booking functions
+
+            app.MapGet("/bookings", async (PlaceBookingContext db) =>
+             await db.Bookings.ToListAsync());
+
+            app.MapPost("/booking", async (Booking inputBooking, PlaceBookingContext db) =>
+            {
+                Booking newBooking = new();
+                newBooking.IdSession = inputBooking.IdSession;
+                newBooking.IdPlace = inputBooking.IdPlace;
+                newBooking.IdAccount = inputBooking.IdAccount;
+                newBooking.BookingCode = inputBooking.BookingCode;
+                newBooking.DateTime = inputBooking.DateTime;
+
+                db.Bookings.Add(newBooking);
+                await db.SaveChangesAsync();
+
+                return Results.Ok(newBooking);
+            });
+
+            app.MapPut("/editBookings", async (Booking inputBooking, PlaceBookingContext db) =>
+            {
+                var editBooking = await db.Bookings.FindAsync(inputBooking.IdBooking);
+                if (editBooking is null)
+                {
+                    return Results.NotFound();
+                }
+                editBooking.IdSession = inputBooking.IdSession;
+                editBooking.IdPlace = inputBooking.IdPlace;
+                editBooking.IdAccount = inputBooking.IdAccount;
+                editBooking.BookingCode = inputBooking.BookingCode;
+                editBooking.DateTime = inputBooking.DateTime;
+
+                await db.SaveChangesAsync();
+                return Results.Ok(editBooking);
+            });
+
+            app.MapDelete("/booking/{idBooking}", async (int idBooking, PlaceBookingContext db) =>
+            {
+                if (await db.Bookings.FindAsync(idBooking) is Booking booking)
+                {
+                    db.Bookings.Remove(booking);
+                    await db.SaveChangesAsync();
+                    return Results.Ok(booking);
+                }
+                return Results.NotFound();
+            });
+
+            ////////////// Get id of reserved seats
+
+            app.MapGet("/reservedSeats/{idSession}/{idHall}", async (int idSession, int idHall, PlaceBookingContext db) =>
+            {
+                return await (from booking in db.Bookings
+                              join place in db.Places on booking.IdPlace equals place.IdPlace
+                              where place.IdHall == idHall && booking.IdSession == idSession
+                              select booking.IdPlace).ToListAsync();
             });
 
             app.Run();
