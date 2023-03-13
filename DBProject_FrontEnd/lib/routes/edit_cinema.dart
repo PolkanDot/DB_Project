@@ -11,7 +11,7 @@ class EditCinema extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RoutesData routesData =
-    ModalRoute.of(context)?.settings.arguments as RoutesData;
+        ModalRoute.of(context)?.settings.arguments as RoutesData;
     //Cinema cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
     return WillPopScope(
       child: Scaffold(
@@ -38,7 +38,7 @@ class EditCinema extends StatelessWidget {
                 ),
                 TextFormField(
                   onChanged: (String value) =>
-                  {routesData.cinema.cityName = value},
+                      {routesData.cinema.cityName = value},
                   decoration: const InputDecoration(labelText: "City name"),
                   initialValue: routesData.cinema.cityName,
                   validator: (value) {
@@ -50,7 +50,7 @@ class EditCinema extends StatelessWidget {
                 ),
                 TextFormField(
                   onChanged: (String value) =>
-                  {routesData.cinema.address = value},
+                      {routesData.cinema.address = value},
                   decoration: const InputDecoration(labelText: "Address"),
                   initialValue: routesData.cinema.address,
                   validator: (value) {

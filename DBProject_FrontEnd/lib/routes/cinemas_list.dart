@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../callApi/get_cinemas_of_city.dart';
+import '../models/account.dart';
 import '../models/data_for_routes.dart';
 import '../models/cinema.dart';
 import '../models/hall.dart';
@@ -22,7 +23,8 @@ class CinemaCard extends StatelessWidget {
             cityName: cinema.cityName,
             address: cinema.address,
             halls: cinema.halls);
-        Navigator.pushNamed(context, "/edit_cinema", arguments: localRoutesData);
+        Navigator.pushNamed(context, "/edit_cinema",
+            arguments: localRoutesData);
       },
       title: Text(cinema.name,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
@@ -86,11 +88,11 @@ class _CinemaListState extends State<CinemaList> {
         ),
         body: ListView.separated(
             separatorBuilder: (BuildContext context, int index) =>
-            const Divider(
-              color: Colors.black,
-              height: 10,
-              thickness: 2,
-            ),
+                const Divider(
+                  color: Colors.black,
+                  height: 10,
+                  thickness: 2,
+                ),
             itemCount: _cinemas.length,
             padding: const EdgeInsets.all(20),
             itemBuilder: (BuildContext context, int index) {
@@ -108,43 +110,11 @@ class _CinemaListState extends State<CinemaList> {
         ),
       ),
       onWillPop: () async {
+        Account? acc = Account(idAccount: 0, name: "", email: "", password: "", dateOfBirthday: DateTime.now(), role: 1, bookings: []);
         Navigator.pushReplacementNamed(context, '/cities',
-            arguments: routesData);
+            arguments: acc);
         return Future.value(true);
       },
     );
   }
 }
-/*
-else {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("-Step 2-"),
-          centerTitle: true,
-        ),
-        body: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.black, height: 10, thickness: 2,),
-            itemCount: _cinemas.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(children: [
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_cinemas[index].name,
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.black)),
-                      Text("Address: ${_cinemas[index].address}",
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.orange)),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ]);
-            }),
-      );
- */

@@ -90,11 +90,11 @@ class _HallsListState extends State<HallsList> {
         ),
         body: ListView.separated(
             separatorBuilder: (BuildContext context, int index) =>
-            const Divider(
-              color: Colors.black,
-              height: 10,
-              thickness: 2,
-            ),
+                const Divider(
+                  color: Colors.black,
+                  height: 10,
+                  thickness: 2,
+                ),
             itemCount: _halls.length,
             padding: const EdgeInsets.all(20),
             itemBuilder: (BuildContext context, int index) {

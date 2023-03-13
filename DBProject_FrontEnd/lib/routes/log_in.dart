@@ -31,7 +31,7 @@ class Authorization extends StatelessWidget {
                   if (value != "") {
                     _email = value;
                   }
-                },
+                  },
               ),
               const SizedBox(
                 height: 12,

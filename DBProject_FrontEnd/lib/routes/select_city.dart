@@ -143,7 +143,7 @@ class _SelectCityState extends State<SelectCity> {
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
               userRoutesData.account =
-              ModalRoute.of(context)?.settings.arguments as Account;
+                  ModalRoute.of(context)?.settings.arguments as Account;
               if (userRoutesData.account!.role == 0) {
                 Navigator.pushNamed(context, '/user_list_cinemas',
                     arguments: userRoutesData);
@@ -155,16 +155,16 @@ class _SelectCityState extends State<SelectCity> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: const Text("Вы не выбрали город!"),
-                        content: const Text(
-                            "Выберите город из списка предложенных."),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Хорошо'),
-                          )
-                        ],
-                      ));
+                            title: const Text("Вы не выбрали город!"),
+                            content: const Text(
+                                "Выберите город из списка предложенных."),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Хорошо'),
+                              )
+                            ],
+                          ));
                 }
               }
               formKey.currentState!.validate();
@@ -180,7 +180,7 @@ class _SelectCityState extends State<SelectCity> {
     }
     if (_citiesNamesList.isEmpty) {
       userRoutesData.account =
-      ModalRoute.of(context)?.settings.arguments as Account?;
+          ModalRoute.of(context)?.settings.arguments as Account?;
       if (userRoutesData.account!.role == 0) {
         return Scaffold(
           appBar: AppBar(
@@ -233,10 +233,10 @@ class _SelectCityState extends State<SelectCity> {
     }
     return const Scaffold(
         body: Center(
-          child: Text(
-            "Загружаем...",
-            textAlign: TextAlign.center,
-          ),
-        ));
+      child: Text(
+        "Загружаем...",
+        textAlign: TextAlign.center,
+      ),
+    ));
   }
 }
