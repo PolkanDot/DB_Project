@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../callApi/checkingExistenceOfAccount.dart';
-import '../models/Account.dart';
+import '../models/account.dart';
 
 class Authorization extends StatelessWidget {
   Authorization({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class Authorization extends StatelessWidget {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Log in"),
+          title: const Text("Войти"),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -27,15 +27,23 @@ class Authorization extends StatelessWidget {
               ),
               TextField(
                 decoration: const InputDecoration(labelText: "Email"),
-                onChanged: (String value) => {_email = value},
+                onChanged: (String value) {
+                  if (value != "") {
+                    _email = value;
+                  }
+                },
               ),
               const SizedBox(
                 height: 12,
               ),
               TextField(
                 obscureText: true,
-                decoration: const InputDecoration(labelText: "Password"),
-                onChanged: (String value) => {_pw = value},
+                decoration: const InputDecoration(labelText: "Пароль"),
+                onChanged: (String value) {
+                  if (value != "") {
+                    _pw = value;
+                  }
+                },
               ),
               OverflowBar(
                 alignment: MainAxisAlignment.end,
@@ -44,21 +52,15 @@ class Authorization extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushNamed(context, '/');
                       },
-                      child: const Text("CANCEL")),
+                      child: const Text("НАЗАД")),
                   ElevatedButton(
-                    child: const Text("LOG IN"),
+                    child: const Text("ВОЙТИ"),
                     onPressed: () async {
-                      account = await checkingExistenceOfAccount(_email, _pw);
+                      account = await checkingExistenceOfAccount(_email.trim(), _pw.trim());
                       if ((account != null)) {
-                        role = account!.role;
-                        if (role == 2) {
-                          Navigator.pushNamed(context, "/admin_list_films");
-                        }
-                        else {
-                          Navigator.pushNamed(context, "/cities", arguments: role);
-                        }
+                        Navigator.pushReplacementNamed(
+                            context, "/cities", arguments: account);
                       }
-                      //if (await checkRegisterOfEmail(_email, _pw) != null) {
                       else {
                         showDialog(
                             context: context,
