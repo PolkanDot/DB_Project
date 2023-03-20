@@ -91,7 +91,7 @@ class EditCinema extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/admin_list_sessions',
-                            arguments: routesData.cinema);
+                            arguments: routesData);
                       },
                       child: const Text("Изменить сеансы"),
                     ),

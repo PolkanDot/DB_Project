@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:db_roject_frontend/callApi/get_sessions_of_cinema.dart';
 import '../models/session_info.dart';
-import '../models/cinema.dart';
+import '../models/data_for_routes.dart';
 
 class SessionCard extends StatelessWidget {
   SessionCard({required this.sessionInfo, Key? key}) : super(key: key);
@@ -62,8 +62,8 @@ class _AdminSessionListState extends State<AdminSessionList> {
   List<SessionInfo> _sessions = [];
 
   void getAllSessions() async {
-    Cinema cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
-    List<SessionInfo>? response = await getSessionsOfCinema(cinema.idCinema);
+    RoutesData routesData = ModalRoute.of(context)?.settings.arguments as RoutesData;
+    List<SessionInfo>? response = await getSessionsOfCinema(routesData.cinema.idCinema);
     if (response != null) {
       setState(() {
         _sessions = response;
@@ -84,11 +84,11 @@ class _AdminSessionListState extends State<AdminSessionList> {
 
   @override
   Widget build(BuildContext context) {
-    Cinema cinema = ModalRoute.of(context)?.settings.arguments as Cinema;
+    RoutesData routesData = ModalRoute.of(context)?.settings.arguments as RoutesData;
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: Text("-Администраторский список фильмов кинотеатра ${cinema.name}-"),
+              title: Text("-Администраторский\nсписок фильмов\nкинотеатра\n${routesData.cinema.name}-"),
               centerTitle: true,
             ),
             body: ListView.separated(
@@ -128,7 +128,7 @@ class _AdminSessionListState extends State<AdminSessionList> {
             )
         ),
         onWillPop: () async {
-          Navigator.pushReplacementNamed(context, "/log_in",);
+          Navigator.pushReplacementNamed(context, "/edit_cinema", arguments: routesData);
           return Future.value(true);
         }
     );
