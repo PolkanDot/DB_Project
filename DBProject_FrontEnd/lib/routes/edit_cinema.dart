@@ -88,6 +88,13 @@ class EditCinema extends StatelessWidget {
                       },
                       child: const Text("SAVE"),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/admin_list_sessions',
+                            arguments: routesData.cinema);
+                      },
+                      child: const Text("Изменить сеансы"),
+                    ),
                   ],
                 )
               ],
