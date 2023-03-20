@@ -406,7 +406,9 @@ namespace API
                               select new
                               {
                                   idSession = session.IdSession,
-                                  idHall = session.IdHall,
+                                  filmName = film.Name,
+                                  idCinema = hall.IdCinema,
+                                  idHall = hall.IdHall,
                                   hallNumber = hall.Number,
                                   hallType = hall.Type,
                                   dateTime = session.DateTime
