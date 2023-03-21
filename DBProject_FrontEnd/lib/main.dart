@@ -36,6 +36,7 @@ import 'routes/select_place.dart';
 
 import 'routes/user_sessions_list.dart';
 import 'routes/admin_sessions_list.dart';
+import 'routes/add_session.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -84,6 +85,7 @@ void main() {
         '/edit_role': (context) => EditRole(),
         '/add_role': (context) => AddRole(),
         '/admin_list_sessions': (context) => AdminSessionList(),
+        '/add_session': (context) => AddSession(),
       },
     ),
   );
