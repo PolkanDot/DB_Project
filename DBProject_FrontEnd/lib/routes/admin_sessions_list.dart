@@ -88,7 +88,7 @@ class _AdminSessionListState extends State<AdminSessionList> {
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: Text("-Администраторский\nсписок фильмов\nкинотеатра\n${routesData.cinema.name}-"),
+              title: Text("-Сеансы кинотеатра\n${routesData.cinema.name}-"),
               centerTitle: true,
             ),
             body: ListView.separated(
@@ -108,27 +108,23 @@ class _AdminSessionListState extends State<AdminSessionList> {
                 children: [
                   FloatingActionButton(
                     child: Icon(
-                        Icons.video_call
+                        Icons.add
                     ),
-                    onPressed: () {},//=> Navigator.pushReplacementNamed(context, '/add_film'),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, '/add_session',
+                            arguments: routesData),
                     heroTag: null,
                   ),
                   SizedBox(
                     height: 10,
                     width: 20,
                   ),
-                  FloatingActionButton(
-                    child: Icon(
-                        Icons.people
-                    ),
-                    onPressed: () {},//=> Navigator.pushReplacementNamed(context, '/admin_list_actors'),
-                    heroTag: null,
-                  )
                 ]
             )
         ),
         onWillPop: () async {
-          Navigator.pushReplacementNamed(context, "/edit_cinema", arguments: routesData);
+          Navigator.pushReplacementNamed(context, "/edit_cinema",
+              arguments: routesData);
           return Future.value(true);
         }
     );
