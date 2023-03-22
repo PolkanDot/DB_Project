@@ -178,7 +178,7 @@ class _AddSessionState extends State<AddSession> {
                       ElevatedButton(
                         onPressed: ()
                         {
-                          createSession(session.idFilm, session.idHall, dateTime);
+                          createSession(session.idFilm, session.idHall, dateTime.toString());
                           Navigator.pushReplacementNamed(context, '/admin_list_sessions',
                               arguments: routesData);
                         },
