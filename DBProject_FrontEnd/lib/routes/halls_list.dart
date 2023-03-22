@@ -4,6 +4,7 @@ import '../models/cinema.dart';
 import '../models/data_for_routes.dart';
 import '../models/hall.dart';
 import '../models/place.dart';
+import '../models/session_info.dart';
 
 class HallCard extends StatelessWidget {
   const HallCard({required this.hall, required this.routesData, Key? key})
@@ -57,7 +58,16 @@ class _HallsListState extends State<HallsList> {
           capacity: 0,
           places: [],
           sessions: []),
-      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []));
+      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []),
+      SessionInfo(
+          idSession: 0,
+          idCinema: 0,
+          idHall: 0,
+          filmName: "",
+          hallNumber: 0,
+          hallType: 0,
+          dateTime: DateTime.now())
+    );
 
   void getHalls() async {
     List<Hall>? response = await getHallsOfCinema(routesData.cinema.idCinema);

@@ -1,3 +1,4 @@
+import 'package:db_roject_frontend/models/session_info.dart';
 import 'package:flutter/material.dart';
 import '../callApi/get_cinemas_of_city.dart';
 import '../models/account.dart';
@@ -55,7 +56,15 @@ class _CinemaListState extends State<CinemaList> {
           capacity: 0,
           places: [],
           sessions: []),
-      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []));
+      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []),
+      SessionInfo(
+          idSession: 0,
+          idCinema: 0,
+          idHall: 0,
+          filmName: "",
+          hallNumber: 0,
+          hallType: 0,
+          dateTime: DateTime.now()));
 
   void getCinemas() async {
     List<Cinema>? response = await getCinemasOfCity(routesData.cityName);
@@ -83,7 +92,7 @@ class _CinemaListState extends State<CinemaList> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("-Edit cinemas page-"),
+          title: const Text("-Список фильмов-"),
           centerTitle: true,
         ),
         body: ListView.separated(

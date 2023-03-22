@@ -6,6 +6,7 @@ import '../models/hall.dart';
 import '../callApi/create_session.dart';
 import '../callApi/get_halls.dart';
 import '../callApi/getFilms.dart';
+import '../models/cinema.dart';
 import '../models/data_for_routes.dart';
 
 class AddSession extends StatefulWidget {

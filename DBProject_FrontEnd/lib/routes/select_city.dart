@@ -9,6 +9,7 @@ import '../models/cinema.dart';
 import '../models/data_for_routes.dart';
 import '../models/film.dart';
 import '../models/hall.dart';
+import '../models/session_info.dart';
 
 class SelectCity extends StatefulWidget {
   const SelectCity({Key? key}) : super(key: key);
@@ -34,7 +35,15 @@ class _SelectCityState extends State<SelectCity> {
           capacity: 0,
           places: [],
           sessions: []),
-      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []));
+      Place(idPlace: 0, idHall: 0, row: 0, seatNumber: 0, bookings: []),
+      SessionInfo(
+          idSession: 0,
+          idCinema: 0,
+          idHall: 0,
+          filmName: "",
+          hallNumber: 0,
+          hallType: 0,
+          dateTime: DateTime.now()));
 
   UserRoutesData userRoutesData = UserRoutesData(
       "",

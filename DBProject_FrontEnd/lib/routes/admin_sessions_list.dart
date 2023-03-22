@@ -41,9 +41,11 @@ class SessionCard extends StatelessWidget {
               style: const TextStyle(fontSize: 16, color: Colors.orange)),
           Text("Тип зала: ${sessionInfo.hallType}",
               style: const TextStyle(fontSize: 16, color: Colors.orange)),
-          Text("Дата: ${sessionInfo.dateTime.day}.${sessionInfo.dateTime.month}",
+          Text("Дата: ${sessionInfo.dateTime.day.toString().padLeft(2, '0')}"
+              ".${sessionInfo.dateTime.month.toString().padLeft(2, '0')}",
               style: const TextStyle(fontSize: 16, color: Colors.orange)),
-          Text("Время: ${sessionInfo.dateTime.hour}:${sessionInfo.dateTime.minute}",
+          Text("Время: ${sessionInfo.dateTime.hour.toString().padLeft(2, '0')}"
+              ":${sessionInfo.dateTime.minute.toString().padLeft(2, '0')}",
               style: const TextStyle(fontSize: 16, color: Colors.orange)),
         ],
       )
