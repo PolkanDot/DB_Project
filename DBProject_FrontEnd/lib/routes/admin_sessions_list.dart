@@ -29,8 +29,12 @@ class SessionCard extends StatelessWidget {
         break;
     }
     return ListTile(
-      onTap: () {},
-          //Navigator.pushNamed(context, "/edit_film", arguments: film),
+      onTap: () {
+        RoutesData routesData = ModalRoute.of(context)?.settings.arguments as RoutesData;
+        routesData.sessionInfo = sessionInfo;
+        Navigator.pushReplacementNamed(context, "/edit_session",
+          arguments: routesData);
+        },
       title: Text(sessionInfo.filmName,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
       subtitle: Column(

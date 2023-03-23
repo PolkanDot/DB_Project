@@ -6,7 +6,6 @@ import '../models/hall.dart';
 import '../callApi/create_session.dart';
 import '../callApi/get_halls.dart';
 import '../callApi/getFilms.dart';
-import '../models/cinema.dart';
 import '../models/data_for_routes.dart';
 
 class AddSession extends StatefulWidget {
@@ -149,7 +148,6 @@ class _AddSessionState extends State<AddSession> {
                       ),
                       SingleChildScrollView(
                         child: DropDownTextField(
-                          // initialValue: "name4",
                           readOnly: false,
                           controller: _cnt1,
                           clearOption: true,
@@ -194,139 +192,3 @@ class _AddSessionState extends State<AddSession> {
     );
   }
 }
-/*
-import 'package:flutter/material.dart';
-import 'package:dropdown_textfield/dropdown_textfield.dart';
-import '../models/session.dart';
-import '../models/film.dart';
-import '../models/hall.dart';
-import '../callApi/create_session.dart';
-import '../callApi/get_halls.dart';
-import '../callApi/getFilms.dart';
-import '../models/data_for_routes.dart';
-
-class AddSession extends StatefulWidget {
-  AddSession({Key? key}) : super(key: key);
-
-  @override
-  State<AddSession> createState() => _AddSessionState();
-}
-
-class _AddSessionState extends State<AddSession> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late SingleValueDropDownController _cnt;
-  final formKey = GlobalKey<FormState>();
-  final List<DropDownValueModel> _filmsList = [];
-  final List<DropDownValueModel> _hallsList = [];
-  bool duplicate = false;
-
-  Session session = Session(
-      idSession: 0,
-      idFilm: 0,
-      idHall: 0,
-      dateTime: DateTime.now(),
-      bookings: []
-  );
-
-  void wrapHalls() async {
-    RoutesData routesData = ModalRoute.of(context)?.settings.arguments as RoutesData;
-    List<Hall>? response = await getHallsOfCinema(routesData.cinema.idCinema);
-    if (response != null) {
-      for (Hall hall in response) {
-        _hallsList.add(DropDownValueModel(name: hall.number.toString(), value: hall.idHall));
-      }
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    _cnt = SingleValueDropDownController();
-    wrapHalls();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _cnt.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    RoutesData routesData = ModalRoute.of(context)?.settings.arguments as RoutesData;
-    return WillPopScope(
-        child: Scaffold(
-            appBar: AppBar(
-              title: const Text("Добавление\nсеанса"),
-              centerTitle: true,
-            ),
-            body: Form(
-                key: formKey,
-                autovalidateMode: AutovalidateMode.always,
-                child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    children: [
-                      // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
-                      // добавить проверку на валидность ввода (найти в инете как проверять имена людей и тп)
-                      Text("Фильм:"),
-                      Text("Номер зала:"),
-                      SingleChildScrollView(
-                        child: Form(
-                          key: _formKey,
-                          child: DropDownTextField(
-                            // initialValue: "name4",
-                            readOnly: false,
-                            controller: _cnt,
-                            clearOption: true,
-                            keyboardType: TextInputType.text,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            clearIconProperty: IconProperty(color: Colors.green),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Выберете зал";
-                              } else {
-                                return null;
-                              }
-                            },
-                            dropDownItemCount: 6,
-                            dropDownList: _hallsList,
-                            onChanged: (value) => {
-                              if (value != "") {session.idHall = value.value}
-                            },
-                          ),
-                        ),
-                      ),
-                      TextFormField(
-                        onChanged: (String value) => {session.dateTime = DateTime.parse(value)},
-                        decoration: const InputDecoration(labelText: "Дата и время"),
-                        initialValue: DateTime.now().toString(),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Введите дату и время сеанса';
-                          }
-                          return null;
-                        },
-                      ),
-                      ElevatedButton(
-                        onPressed: () {}
-                        /*{
-                          createSession(session.idFilm, session.idHall, session.dateTime);
-                          Navigator.pushReplacementNamed(context, '/admin_list_sessions',
-                              arguments: routesData);
-                        }*/,
-                        child: const Text("СОЗДАТЬ"),
-                      ),
-                    ]
-                )
-            )
-        ),
-        onWillPop: () async {
-          Navigator.pushReplacementNamed(context, '/admin_list_sessions',
-              arguments: routesData);
-          return Future.value(true);
-        }
-    );
-  }
-}
- */

@@ -6,14 +6,18 @@ String baseUrl = 'https://10.0.2.2:7172/editSession';
 
 Future<Session?> editSession(Session? session) async {
   try {
+    String dateTime = session!.dateTime.toString();
+    dateTime = "${dateTime.substring(0, 10)}T${dateTime.substring(11, 19)}";
+    print(dateTime);
     if (session != null) {
       Response response = await Dio().put(baseUrl, data: {
         'idSession': session.idSession,
         'idFilm': session.idFilm,
         'idHall': session.idHall,
-        'dateTime': session.dateTime,
+        'dateTime': dateTime,
       });
       print(response.data.toString());
+      print("Ura");
       return Session.fromJson(response.data);
     }
     return null;
