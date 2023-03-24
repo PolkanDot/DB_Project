@@ -4,7 +4,6 @@ import '../callApi/delete_session_func.dart';
 import '../callApi/edit_session_func.dart';
 import '../callApi/get_halls.dart';
 import '../callApi/getFilms.dart';
-import '../models/session_info.dart';
 import '../models/film.dart';
 import '../models/hall.dart';
 import '../models/data_for_routes.dart';
@@ -131,7 +130,7 @@ class _EditSessionState extends State<EditSession> {
                       // добавить проверку на валидность ввода (найти в инете как проверять имена людей и тп)
                       SingleChildScrollView(
                         child: DropDownTextField(
-                          // initialValue: "name4",
+                          //initialValue: "name4",
                           readOnly: false,
                           controller: _cnt1,
                           clearOption: true,

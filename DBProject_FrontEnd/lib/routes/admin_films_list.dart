@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/callApi/getFilms.dart';
+import '../callApi/getFilms.dart';
 import '../models/film.dart';
 
 class FilmCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class FilmCard extends StatelessWidget {
           Navigator.pushNamed(context, "/edit_film", arguments: film),
       title: Text(film.name,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
-      subtitle: Text("Age restriction: ${film.ageRating}",
+      subtitle: Text("Возрастное ограничение: ${film.ageRating}",
           style: const TextStyle(fontSize: 16, color: Colors.orange)),
     );
   }
@@ -55,7 +55,7 @@ class _AdminFilmListState extends State<AdminFilmList> {
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("-Films admin page-"),
+              title: const Text("Список фильмов"),
               centerTitle: true,
             ),
             body: ListView.separated(

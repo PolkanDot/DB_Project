@@ -82,7 +82,7 @@ class _UserCinemaListState extends State<UserCinemaList> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Кинотеатры"),
+          title: const Text("Выберите кинотеатр"),
           centerTitle: true,
         ),
         body: ListView.separated(

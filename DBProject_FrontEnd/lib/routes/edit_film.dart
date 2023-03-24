@@ -1,4 +1,4 @@
-import 'package:db_roject_frontend/models/film.dart';
+import '../models/film.dart';
 import 'package:flutter/material.dart';
 import '../callApi/delete_film_func.dart';
 import '../callApi/edit_film_func.dart';
@@ -15,7 +15,7 @@ class EditFilm extends StatelessWidget {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit film data"),
+          title: const Text("Редактирование фильма"),
         ),
         body: Form(
             key: _formKey,
@@ -26,22 +26,22 @@ class EditFilm extends StatelessWidget {
                 // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
                 TextFormField(
                   onChanged: (String value) => {film.name = value},
-                  decoration: const InputDecoration(labelText: "Film name"),
+                  decoration: const InputDecoration(labelText: "Название"),
                   initialValue: film.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter film name';
+                      return 'Введите название фильма';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   onChanged: (String value) => {film.duration = value},
-                  decoration: const InputDecoration(labelText: "Film duration"),
+                  decoration: const InputDecoration(labelText: "Продолжительность"),
                   initialValue: film.duration,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter film duration';
+                      return 'Введите продолжительность фильма';
                     }
                     return null;
                   },
@@ -59,11 +59,11 @@ class EditFilm extends StatelessWidget {
                     film.ageRating = -1;
                   }
                     },
-                  decoration: const InputDecoration(labelText: "Film age restriction"),
+                  decoration: const InputDecoration(labelText: "Возрастное ограничение"),
                   initialValue: film.ageRating.toString(),
                   validator: (value) {
                     if (value == null || value.isEmpty || film.ageRating == -1) {
-                      return 'Enter valid age';
+                      return 'Введите возрастное ограничение';
                     }
                     return null;
                   },
@@ -76,11 +76,11 @@ class EditFilm extends StatelessWidget {
                   onChanged: (String value) {
                     film.description = value;
                   },
-                  decoration: const InputDecoration(labelText: "Film descrioption"),
+                  decoration: const InputDecoration(labelText: "Описание"),
                   initialValue: film.description,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter film description';
+                      return 'Введите описание фильма';
                     }
                     return null;
                   },
@@ -93,7 +93,7 @@ class EditFilm extends StatelessWidget {
                         deleteFilm(film.idFilm);
                         Navigator.pushReplacementNamed(context, '/admin_list_films');
                       },
-                      child: const Text("DELETE"),
+                      child: const Text("УДАЛИТЬ"),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -102,14 +102,31 @@ class EditFilm extends StatelessWidget {
                         Navigator.pushReplacementNamed(context, '/admin_list_roles',
                             arguments: film);
                       },
-                      child: const Text("EDIT ROLES ->"),
+                      child: const Text("РЕДАКТИРОВАТЬ РОЛИ"),
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        editFilm(film);
-                        Navigator.pushReplacementNamed(context, '/admin_list_films');
+                        if (film.name != "" &&
+                            film.duration != "" &&
+                            film.description != "") {
+                          editFilm(film);
+                          Navigator.pushReplacementNamed(context, '/admin_list_films');
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text("Стоп, стоп..."),
+                                content: const Text("Заполните все поля!"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Понял'),
+                                  )
+                                ],
+                              ));
+                        }
                       },
-                      child: const Text("SAVE"),
+                      child: const Text("СОХРАНИТЬ"),
                     ),
                   ],
                 )

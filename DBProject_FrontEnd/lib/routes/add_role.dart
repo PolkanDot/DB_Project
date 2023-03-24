@@ -56,7 +56,7 @@ class _AddRoleState extends State<AddRole> {
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("Add Role"),
+              title: const Text("Добавить роль"),
               centerTitle: true,
             ),
             body: Form(
@@ -69,11 +69,11 @@ class _AddRoleState extends State<AddRole> {
                       // добавить проверку на валидность ввода (найти в инете как проверять имена людей и тп)
                       TextFormField(
                         onChanged: (String value) => {role.namePersonage = value},
-                        decoration: const InputDecoration(labelText: "Name personage"),
+                        decoration: const InputDecoration(labelText: "Имя персонажа"),
                         initialValue: role.namePersonage,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Enter name personage';
+                            return 'Введите имя персонажа';
                           }
                           return null;
                         },
@@ -91,7 +91,7 @@ class _AddRoleState extends State<AddRole> {
                             clearIconProperty: IconProperty(color: Colors.green),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return "Required field";
+                                return "Обязательное поле";
                               } else {
                                 return null;
                               }
@@ -104,6 +104,9 @@ class _AddRoleState extends State<AddRole> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ElevatedButton(
                         onPressed: ()
                         {
@@ -112,7 +115,7 @@ class _AddRoleState extends State<AddRole> {
                           Navigator.pushReplacementNamed(context, '/admin_list_roles',
                               arguments: film);
                         },
-                        child: const Text("CREATE"),
+                        child: const Text("СОЗДАТЬ"),
                       ),
                     ]))),
         onWillPop: () async {

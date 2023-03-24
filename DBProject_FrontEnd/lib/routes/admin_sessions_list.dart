@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/callApi/get_sessions_of_cinema.dart';
+import '../callApi/get_sessions_of_cinema.dart';
 import '../models/session_info.dart';
 import '../models/data_for_routes.dart';
 

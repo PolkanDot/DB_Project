@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/callApi/get_roles_of_film.dart';
-import 'package:db_roject_frontend/callApi/get_actor_by_idActor.dart';
+import '../callApi/get_roles_of_film.dart';
+import '../callApi/get_actor_by_idActor.dart';
 import '../models/role.dart';
 import '../models/actor.dart';
 import '../models/film.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:db_roject_frontend/callApi/get_actors.dart';
+import '../callApi/get_actors.dart';
 import '../models/actor.dart';
 
 class ActorCard extends StatelessWidget {
@@ -53,7 +53,7 @@ class _AdminActorListState extends State<AdminActorList> {
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("-Actors admin page-"),
+              title: const Text("Список актёров"),
               centerTitle: true,
             ),
             body: ListView.separated(

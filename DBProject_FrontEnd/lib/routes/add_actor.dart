@@ -18,7 +18,7 @@ class AddActor extends StatelessWidget {
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("Add actor"),
+              title: const Text("Добавить актёра"),
               centerTitle: true,
             ),
             body: Form(
@@ -31,14 +31,17 @@ class AddActor extends StatelessWidget {
                       // добавить проверку на валидность ввода (найти в инете как проверять имена людей и тп)
                       TextFormField(
                         onChanged: (String value) => {actor!.name = value},
-                        decoration: const InputDecoration(labelText: "Actor name"),
+                        decoration: const InputDecoration(labelText: "Имя"),
                         initialValue: actor!.name,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Enter actor name';
+                            return 'Введите имя актёра';
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -65,7 +68,7 @@ class AddActor extends StatelessWidget {
                                   ));
                             }
                         },
-                        child: const Text("SAVE"),
+                        child: const Text("СОХРАНИТЬ"),
                       ),
                     ]))),
         onWillPop: () async {

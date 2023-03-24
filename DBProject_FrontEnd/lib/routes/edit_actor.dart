@@ -1,4 +1,4 @@
-import 'package:db_roject_frontend/models/actor.dart';
+import '../models/actor.dart';
 import 'package:flutter/material.dart';
 import '../callApi/delete_actor_func.dart';
 import '../callApi/edit_actor_func.dart';

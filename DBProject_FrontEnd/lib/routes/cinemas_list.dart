@@ -1,4 +1,4 @@
-import 'package:db_roject_frontend/models/session_info.dart';
+import '../models/session_info.dart';
 import 'package:flutter/material.dart';
 import '../callApi/get_cinemas_of_city.dart';
 import '../models/account.dart';
@@ -29,7 +29,7 @@ class CinemaCard extends StatelessWidget {
       },
       title: Text(cinema.name,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
-      subtitle: Text("Address: ${cinema.address}",
+      subtitle: Text("Адрес: ${cinema.address}",
           style: const TextStyle(fontSize: 16, color: Colors.orange)),
     );
   }
@@ -92,7 +92,7 @@ class _CinemaListState extends State<CinemaList> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("-Список фильмов-"),
+          title: const Text("Список кинотеатров"),
           centerTitle: true,
         ),
         body: ListView.separated(
@@ -119,9 +119,15 @@ class _CinemaListState extends State<CinemaList> {
         ),
       ),
       onWillPop: () async {
-        Account? acc = Account(idAccount: 0, name: "", email: "", password: "", dateOfBirthday: DateTime.now(), role: 1, bookings: []);
-        Navigator.pushReplacementNamed(context, '/cities',
-            arguments: acc);
+        Account? acc = Account(
+            idAccount: 0,
+            name: "",
+            email: "",
+            password: "",
+            dateOfBirthday: DateTime.now(),
+            role: 1,
+            bookings: []);
+        Navigator.pushReplacementNamed(context, '/cities', arguments: acc);
         return Future.value(true);
       },
     );

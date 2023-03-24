@@ -153,6 +153,7 @@ class _SelectCityState extends State<SelectCity> {
             onPressed: () {
               userRoutesData.account =
                   ModalRoute.of(context)?.settings.arguments as Account;
+              print(userRoutesData.account!.role);
               if (userRoutesData.account!.role == 0) {
                 Navigator.pushNamed(context, '/user_list_cinemas',
                     arguments: userRoutesData);
