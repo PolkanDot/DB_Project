@@ -39,6 +39,8 @@ import 'routes/admin_sessions_list.dart';
 import 'routes/add_session.dart';
 import 'routes/edit_session.dart';
 
+import 'routes/user_booking_list.dart';
+
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
@@ -88,6 +90,7 @@ void main() {
         '/admin_list_sessions': (context) => AdminSessionList(),
         '/add_session': (context) => AddSession(),
         '/edit_session': (context) => EditSession(),
+        '/user_list_bookings': (context) => UserBookingList(),
       },
     ),
   );

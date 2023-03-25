@@ -1,40 +1,80 @@
 import 'package:flutter/material.dart';
 import '../callApi/get_bookings_of_accout.dart';
 import '../models/user_data_for_routes.dart';
-import '../models/booking.dart';
+import '../models/booking_info.dart';
+import '../models/cinema.dart';
+import '../models/film.dart';
+import '../models/session.dart';
 
 class BookingCard extends StatelessWidget {
-  BookingCard({required this.booking, required this.localRoutesData, Key? key})
+  BookingCard({required this.bookingInfo, required this.localRoutesData, Key? key})
       : super(key: key);
 
-  Booking booking;
+  BookingInfo bookingInfo;
   UserRoutesData localRoutesData;
+  String hallType = "";
 
   @override
   Widget build(BuildContext context) {
+    switch (bookingInfo.hallType) {
+      case(0):
+        hallType = "2D";
+        break;
+      case(1):
+        hallType = "3D";
+        break;
+      case(2):
+        hallType = "iMax 2D";
+        break;
+      case(3):
+        hallType = "iMax 3D";
+        break;
+      default:
+        hallType = "?";
+        break;
+    }
     return ListTile(
       onTap: () {
         /*localRoutesData.cinema = cinema;
         Navigator.pushNamed(context, "/user_list_films",
             arguments: localRoutesData);*/
       },
-      title: Text(cinema.name,
+      title: Text(bookingInfo.filmName,
           style: const TextStyle(fontSize: 22, color: Colors.black)),
-      subtitle: Text("Адрес: ${cinema.address}",
-          style: const TextStyle(fontSize: 16, color: Colors.orange)),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text("Кинотеатр: ${bookingInfo.cinemaName}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+          Text("Зал: ${bookingInfo.hallNumber}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+          Text("Тип зала: ${hallType}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+          Text("Ряд: ${bookingInfo.row} Место ${bookingInfo.seatNumber}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+          Text("Дата: ${bookingInfo.dateTime.day.toString().padLeft(2, '0')}"
+              ".${bookingInfo.dateTime.month.toString().padLeft(2, '0')}"
+              " Время: ${bookingInfo.dateTime.hour.toString().padLeft(2, '0')}"
+              ":${bookingInfo.dateTime.minute.toString().padLeft(2, '0')}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+          Text("Код: ${bookingInfo.code}",
+              style: const TextStyle(fontSize: 16, color: Colors.orange)),
+        ],
+      ),
     );
   }
 }
 
-class UserCinemaList extends StatefulWidget {
-  UserCinemaList({Key? key}) : super(key: key);
+class UserBookingList extends StatefulWidget {
+  UserBookingList({Key? key}) : super(key: key);
 
   @override
-  State<UserCinemaList> createState() => _UserCinemaListState();
+  State<UserBookingList> createState() => _UserBookingListState();
 }
 
-class _UserCinemaListState extends State<UserCinemaList> {
-  List<Cinema> _cinemas = [];
+class _UserBookingListState extends State<UserBookingList> {
+  List<BookingInfo> _bookings = [];
 
   UserRoutesData userRoutesData = UserRoutesData(
       "",
@@ -54,11 +94,11 @@ class _UserCinemaListState extends State<UserCinemaList> {
           dateTime: DateTime.now(),
           bookings: []));
 
-  void getCinemas() async {
-    List<Cinema>? response = await getCinemasOfCity(userRoutesData.cityName);
+  void getBookingsInfo() async {
+    List<BookingInfo>? response = await getBookingsOfAccount(userRoutesData.account!.idAccount);
     if (response != null) {
       setState(() {
-        _cinemas = response;
+        _bookings = response;
       });
     }
   }
@@ -71,16 +111,17 @@ class _UserCinemaListState extends State<UserCinemaList> {
   @override
   void didChangeDependencies() {
     userRoutesData = ModalRoute.of(context)?.settings.arguments as UserRoutesData;
-    getCinemas();
+    getBookingsInfo();
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
+    userRoutesData = ModalRoute.of(context)?.settings.arguments as UserRoutesData;
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Выберите кинотеатр"),
+          title: const Text("Ваши бронирования"),
           centerTitle: true,
         ),
         body: ListView.separated(
@@ -90,16 +131,14 @@ class _UserCinemaListState extends State<UserCinemaList> {
               height: 10,
               thickness: 2,
             ),
-            itemCount: _cinemas.length,
+            itemCount: _bookings.length,
             padding: const EdgeInsets.all(20),
             itemBuilder: (BuildContext context, int index) {
-              return CinemaCard(
-                  localRoutesData: userRoutesData, cinema: _cinemas[index]);
+              return BookingCard(bookingInfo: _bookings[index], localRoutesData: userRoutesData);
             }),
       ),
       onWillPop: () async {
-        Navigator.pushReplacementNamed(context, '/cities',
-            arguments: userRoutesData.account);
+        Navigator.pushReplacementNamed(context, '/log_in');
         return Future.value(true);
       },
     );

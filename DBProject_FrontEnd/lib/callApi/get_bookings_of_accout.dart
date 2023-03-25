@@ -1,17 +1,17 @@
 import 'dart:core';
 import 'package:dio/dio.dart';
-import '../models/booking.dart';
+import '../models/booking_info.dart';
 
-String baseUrl = 'https://10.0.2.2:7172/bookings';
+String baseUrl = 'https://10.0.2.2:7172/bookingsInfo';
 
-Future<List<Booking>?> getRolesOfFilm(int idBooking) async {
+Future<List<BookingInfo>?> getBookingsOfAccount(int idAccount) async {
   try {
-    List<Booking> bookings = [];
-    Response response = await Dio().get('$baseUrl/$idBooking');
+    List<BookingInfo> bookings = [];
+    Response response = await Dio().get('$baseUrl/$idAccount');
     print(response.data.toString());
     if (response.data != null) {
       for(var booking in response.data) {
-        bookings.add(Booking.fromJson(booking));
+        bookings.add(BookingInfo.fromJson(booking));
       }
     }
     return bookings;

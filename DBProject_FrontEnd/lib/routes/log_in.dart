@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import '../callApi/checkingExistenceOfAccount.dart';
 import '../models/account.dart';
+import '../models/user_data_for_routes.dart';
+import '../models/booking_info.dart';
+import '../models/cinema.dart';
+import '../models/film.dart';
+import '../models/session.dart';
 
 class Authorization extends StatelessWidget {
   Authorization({Key? key}) : super(key: key);
@@ -9,6 +14,23 @@ class Authorization extends StatelessWidget {
   String _pw = "";
   Account? account;
   int role = 0;
+  UserRoutesData userRoutesData = UserRoutesData(
+      "",
+      Cinema(idCinema: 0, name: "", cityName: "", address: "", halls: []),
+      Film(
+          idFilm: 0,
+          duration: "",
+          name: "",
+          ageRating: 0,
+          description: "",
+          roles: [],
+          sessions: []),
+      Session(
+          idSession: 0,
+          idHall: 2,
+          idFilm: 1,
+          dateTime: DateTime.now(),
+          bookings: []));
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +79,15 @@ class Authorization extends StatelessWidget {
                     child: const Text("ВОЙТИ"),
                     onPressed: () async {
                       account = await checkingExistenceOfAccount(_email.trim(), _pw.trim());
+                      userRoutesData.account = account;
                       if ((account != null)) {
                         role = account!.role;
                         if (role == 2) {
                           Navigator.pushReplacementNamed(context, "/admin_list_films");
+                        }
+                        if (role == 0) {
+                          Navigator.pushReplacementNamed(context, "/user_list_bookings"
+                              , arguments: userRoutesData);
                         }
                         else {
                           Navigator.pushReplacementNamed(
