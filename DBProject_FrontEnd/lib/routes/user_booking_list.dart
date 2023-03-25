@@ -136,6 +136,25 @@ class _UserBookingListState extends State<UserBookingList> {
             itemBuilder: (BuildContext context, int index) {
               return BookingCard(bookingInfo: _bookings[index], localRoutesData: userRoutesData);
             }),
+          floatingActionButton: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  child: Icon(
+                      Icons.add
+                  ),
+                  onPressed: () =>
+                      Navigator.pushReplacementNamed(
+                          context, "/cities", arguments: userRoutesData.account),
+                  heroTag: null,
+                ),
+                SizedBox(
+                  height: 10,
+                  width: 20,
+                ),
+              ]
+          )
       ),
       onWillPop: () async {
         Navigator.pushReplacementNamed(context, '/log_in');

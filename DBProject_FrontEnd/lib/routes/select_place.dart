@@ -200,7 +200,7 @@ class _SelectCityState extends State<SelectPlace> {
                   userRoutesData.account!.idAccount,
                   generator.generate(),
                   DateTime.now().toString());
-              Navigator.pushNamed(context, '/user_list_cinemas',
+              Navigator.pushNamed(context, '/user_list_bookings',
                   arguments: userRoutesData);
             } else {
               showDialog(
@@ -218,7 +218,7 @@ class _SelectCityState extends State<SelectPlace> {
                       ));
             }
           },
-          label: const Text("Перейти"),
+          label: const Text("Создать"),
         ),
       ),
       onWillPop: () async {
