@@ -7,6 +7,7 @@ import '../callApi/getSeatNumbers.dart';
 import '../callApi/get_reserved_seats.dart';
 import '../callApi/get_booking_by_idBooking.dart';
 import '../callApi/edit_booking_func.dart';
+import '../callApi/delete_booking_func.dart';
 import '../callApi/getRows.dart';
 import '../models/place.dart';
 import '../models/placeInfo.dart';
@@ -221,6 +222,16 @@ class _EditBookingState extends State<EditBooking> {
                       place.idPlace = int.parse(seatValue.value.toString());
                     },
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      deleteBooking(booking!.idBooking);
+                      userRoutesData.account = account;
+                      userRoutesData.account!.idAccount = booking!.idAccount;
+                      Navigator.pushReplacementNamed(context, '/user_list_bookings',
+                          arguments: userRoutesData);
+                    },
+                    child: const Text("УДАЛИТЬ"),
+                  ),
                 ],
               ),
             ),
@@ -254,7 +265,7 @@ class _EditBookingState extends State<EditBooking> {
                   ));
             }
           },
-          label: const Text("Создать"),
+          label: const Text("СОХРАНИТЬ"),
         ),
       ),
       onWillPop: () async {

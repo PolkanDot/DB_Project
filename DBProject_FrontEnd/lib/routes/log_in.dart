@@ -84,11 +84,11 @@ class Authorization extends StatelessWidget {
                         if (role == 2) {
                           Navigator.pushReplacementNamed(context, "/admin_list_films");
                         }
-                        if (role == 0) {
+                        else if (role == 0) {
                           Navigator.pushReplacementNamed(context, "/user_list_bookings"
                               , arguments: userRoutesData);
                         }
-                        else {
+                        else if (role == 1){
                           Navigator.pushReplacementNamed(
                               context, "/cities", arguments: account);
                         }
