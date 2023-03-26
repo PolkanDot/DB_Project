@@ -40,6 +40,7 @@ import 'routes/add_session.dart';
 import 'routes/edit_session.dart';
 
 import 'routes/user_booking_list.dart';
+import 'routes/edit_booking.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -91,6 +92,7 @@ void main() {
         '/add_session': (context) => AddSession(),
         '/edit_session': (context) => EditSession(),
         '/user_list_bookings': (context) => UserBookingList(),
+        '/edit_booking': (context) => EditBooking(),
       },
     ),
   );

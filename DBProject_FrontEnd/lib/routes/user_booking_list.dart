@@ -35,9 +35,8 @@ class BookingCard extends StatelessWidget {
     }
     return ListTile(
       onTap: () {
-        /*localRoutesData.cinema = cinema;
-        Navigator.pushNamed(context, "/user_list_films",
-            arguments: localRoutesData);*/
+        Navigator.pushNamed(context, "/edit_booking",
+            arguments: bookingInfo);
       },
       title: Text(bookingInfo.filmName,
           style: const TextStyle(fontSize: 22, color: Colors.black)),

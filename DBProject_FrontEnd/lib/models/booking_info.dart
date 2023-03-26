@@ -7,6 +7,7 @@ class BookingInfo {
     required this.idBooking,
     required this.filmName,
     required this.cinemaName,
+    required this.idHall,
     required this.hallNumber,
     required this.row,
     required this.seatNumber,
@@ -18,6 +19,7 @@ class BookingInfo {
   int idBooking;
   String filmName;
   String cinemaName;
+  int idHall;
   int hallNumber;
   int row;
   int seatNumber;
@@ -31,6 +33,7 @@ class BookingInfo {
       idBooking: json["idBooking"],
       filmName: json["filmName"],
       cinemaName: json["cinemaName"],
+      idHall: json["idHall"],
       hallNumber: json["hallNumber"],
       row: json["row"],
       seatNumber: json["seatNumber"],

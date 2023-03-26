@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../callApi/checkingExistenceOfAccount.dart';
 import '../models/account.dart';
 import '../models/user_data_for_routes.dart';
-import '../models/booking_info.dart';
 import '../models/cinema.dart';
 import '../models/film.dart';
 import '../models/session.dart';
