@@ -497,6 +497,10 @@ namespace API
                 return await db.Bookings.Where(booking=> booking.IdAccount == idAccount).ToListAsync();
             });
 
+            app.MapGet("/booking/{idBooking}", async (int idBooking, PlaceBookingContext db) =>
+            await db.Bookings.FindAsync(idBooking)
+                    is Booking booking ? Results.Ok(booking) : Results.NotFound());
+
             app.MapGet("/bookingsInfo/{idAccount}", async (int idAccount, PlaceBookingContext db) =>
             {
                 return await (from hall in db.Halls
@@ -512,6 +516,7 @@ namespace API
                                   idBooking = booking.IdBooking,
                                   filmName = film.Name,
                                   cinemaName = cinema.Name,
+                                  idHall = place.IdHall,
                                   hallNumber = hall.Number,
                                   row = place.Row,
                                   seatNumber = place.SeatNumber,
