@@ -35,9 +35,7 @@ class AddHall extends StatelessWidget {
                   // добавить к каждому сравнение с исходным значением в поле, чтобы не вызывать апи в случае если данные не изменились
                   TextFormField(
                     onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        routesData.hall.number = int.parse(value);
-                      }
+                      hall!.number = int.parse(value);
                     },
                     decoration: const InputDecoration(labelText: "Номер"),
                     validator: (value) {
@@ -49,9 +47,7 @@ class AddHall extends StatelessWidget {
                   ),
                   TextFormField(
                     onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        routesData.hall.type = int.parse(value);
-                      }
+                      hall!.type = int.parse(value);
                     },
                     decoration: const InputDecoration(labelText: "Тип"),
                     validator: (value) {
@@ -63,9 +59,7 @@ class AddHall extends StatelessWidget {
                   ),
                   TextFormField(
                     onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        routesData.hall.capacity = int.parse(value);
-                      }
+                      hall!.capacity = int.parse(value);
                     },
                     decoration: const InputDecoration(labelText: "Вместимость"),
                     validator: (value) {
@@ -80,7 +74,8 @@ class AddHall extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (hall!.idCinema != 0 && hall!.number != 0 && !([0,1,2].contains(hall!.type)) && hall!.capacity != 0) {
+                      if (true)
+                      {
                         routesData.hall = (await createHall(hall!.idCinema, hall!.number, hall!.type, hall!.capacity))!;
                         Navigator.pushReplacementNamed(context, '/list_places',
                             arguments: routesData);
